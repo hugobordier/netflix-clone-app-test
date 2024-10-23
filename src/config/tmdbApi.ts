@@ -47,3 +47,17 @@ export const getMoviesByCategory = async (categoryId: number) => {
     throw error;
   }
 };
+
+export const getTrailerById = async (movieId: number) => {
+  try {
+    const response = await tmdbApi.get(`/movie/${movieId}/videos`, {
+      params: {
+        language: '',
+      },
+    });
+    return `https://www.youtube.com/watch?v=${response.data.results[0]?.key}`;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
