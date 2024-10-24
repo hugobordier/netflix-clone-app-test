@@ -6,7 +6,6 @@ import Page404 from './pages/page404';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import MovieInfo from './pages/MovieInfo';
-import { getMovieById } from './config/tmdbApi';
 import { useEffect, useState } from 'react';
 import { auth, db } from './config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -82,8 +81,14 @@ function App() {
         <Route path="/spinner" element={<Spinner />} />
         <Route path="/register" element={<Register />} />
         <Route path="/*" element={<Page404 />} />
-        <Route path="/home" element={<Home userData={userData} />} />
-        <Route path="/movie/:movieId" element={<MovieInfo />} />
+        <Route
+          path="/home"
+          element={<Home userData={userData} auth={auth} />}
+        />
+        <Route
+          path="/movie/:movieId"
+          element={<MovieInfo userData={userData} auth={auth} />}
+        />
       </Routes>
     </BrowserRouter>
   );

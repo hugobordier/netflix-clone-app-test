@@ -40,7 +40,6 @@ const MovieRow = ({ categorie, categorieId }: MovieRowInterface) => {
       const response = await getMoviesByCategory(categoryId);
       setMovies(response);
       setLoading(false);
-      console.log(movies);
     } catch (error) {
       console.error('Erreur lors de la récupération des films:', error);
       setError('Erreur lors de la récupération des films');
@@ -63,15 +62,27 @@ const MovieRow = ({ categorie, categorieId }: MovieRowInterface) => {
     <div className="mt-2 animate-slideUp">
       <h2 className="mt-2 mb-2 ml-6 font-bold md:text-2xl ">{categorie}</h2>
       <div className="mx-2 bg-gray-950/50 rounded-2xl">
-        <Carousel responsive={responsive} autoPlaySpeed={1000} infinite={true}>
-          {movies.map((movie, index) => {
-            return (
-              <div key={index} className="flex items-center justify-center p-1">
-                <MovieCard movieId={movie.id} />
-              </div>
-            );
-          })}
-        </Carousel>
+        <div className="relative ">
+          <Carousel
+            responsive={responsive}
+            autoPlay={true}
+            autoPlaySpeed={10000}
+            infinite={true}
+            className=""
+            customRightArrow={<div className="absolute right-0"> &gt;</div>}
+          >
+            {movies.map((movie, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex items-center justify-center p-1"
+                >
+                  <MovieCard movieId={movie.id} />
+                </div>
+              );
+            })}
+          </Carousel>
+        </div>
       </div>
     </div>
   );

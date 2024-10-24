@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { Auth, signOut } from 'firebase/auth';
 
 interface NavBarProps {
   username: string;
   photo?: string;
   onSearchChange: (value: string) => void;
+  auth: Auth;
 }
 
-const NavBar = ({ username, photo, onSearchChange }: NavBarProps) => {
+const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setIsSettingsOpen(true);
@@ -18,10 +22,24 @@ const NavBar = ({ username, photo, onSearchChange }: NavBarProps) => {
     setIsSettingsOpen(false);
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion :', error);
+    }
+  };
+
   return (
     <nav className="flex flex-col w-screen h-12 bg-slate-900 md:h-20">
       <ul className="flex items-center justify-between h-full ">
-        <li className="flex items-center w-full">
+        <li
+          className="flex items-center w-full"
+          onClick={() => {
+            navigate('/home');
+          }}
+        >
           <img
             className="h-10 md:h-16 animate-slideinLeft"
             src={logo}
@@ -72,8 +90,23 @@ const NavBar = ({ username, photo, onSearchChange }: NavBarProps) => {
                 <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">
                   Account
                 </a>
-                <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">
-                  Logout
+                <a
+                  className="flex justify-between px-4 py-2 text-sm text-white hover:bg-gray-400"
+                  onClick={handleLogout}
+                >
+                  <p>Logout</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" x2="9" y1="12" y2="12" />
+                  </svg>
                 </a>
               </div>
             )}

@@ -4,11 +4,17 @@ import NavBar from '../components/NavBar';
 import Research from '../components/Research';
 import MovieRow from '../components/MoviesRow';
 import MovieRowPopular from '../components/MovieRowPopular';
+import User from '../types/user';
+import { Auth } from 'firebase/auth';
+
+type HomeProps = {
+  userData: User;
+  auth: Auth;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Home = (userData: any) => {
+const Home = ({ userData, auth }: HomeProps) => {
   const [searchInput, setSearchInput] = useState('');
-
   const handleSearchChange = (value: string) => {
     setSearchInput(value);
   };
@@ -22,6 +28,7 @@ const Home = (userData: any) => {
       <NavBar
         username={userData.username}
         onSearchChange={handleSearchChange}
+        auth={auth}
       />
       <MovieRowPopular />
       <MovieRow categorie="Films d'action " categorieId={28} />
@@ -29,7 +36,6 @@ const Home = (userData: any) => {
       <MovieRow categorie="Films d'Animation" categorieId={16} />
       <MovieRow categorie="Films DROLE" categorieId={35} />
       <MovieRow categorie="Films Famille" categorieId={10751} />
-
       {searchInput.length > 0 ? <Research searchTerm={searchInput} /> : <></>}
     </div>
   );
