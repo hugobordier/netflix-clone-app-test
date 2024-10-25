@@ -21,8 +21,6 @@ tmdbApi.interceptors.request.use((config) => {
   const cachedData = cache.get(cacheKey);
   if (cachedData) {
     console.log('via cache');
-    console.log(cachedData);
-    //console.log('Données récupérées du cache:', cacheKey);
     return Promise.reject({ isCached: true, data: cachedData });
   }
 

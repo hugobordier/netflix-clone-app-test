@@ -12,6 +12,18 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
   const [clickStartTime, setClickStartTime] = useState<number | null>(null);
   const [isCardHover, setIsCardHover] = useState(false);
   const navigate = useNavigate();
+  const [isScreenSmall, setIsScreenSmall] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsScreenSmall(window.innerWidth < 750);
+    };
+
+    handleResize();
+    console.log(isScreenSmall, 'xwow');
+    // window.addEventListener('resize', handleResize);
+    // return () => window.removeEventListener('resize', handleResize);
+  }, [isScreenSmall]);
 
   // Mouse hover handlers
   const handleMouseEnter = () => {
@@ -83,14 +95,14 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
 
   return (
     <div
-      className="w-[140px] md:w-[180px] py-4 px-2 bg-transparent flex flex-col items-center transition duration-300 transform hover:scale-105"
+      className="w-[140px] md:w-[180px] py-4 px-2 bg-transparent flex flex-col items-center transition duration-300 transform md:hover:scale-105"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className="relative md:h-[240]">
-        {isCardHover && (
+        {(isCardHover || isScreenSmall) && (
           <div
             className="absolute flex items-center justify-center w-8 cursor-pointer right-2 bottom-2 aspect-square"
             onClick={() => {
@@ -120,7 +132,7 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
         />
       </div>
 
-      <h2 className="hidden mt-4 text-center text-white select-none  md:block md:font-bold">
+      <h2 className="hidden mt-4 text-center text-white select-none md:block md:font-bold">
         {movieData.title}
       </h2>
 
