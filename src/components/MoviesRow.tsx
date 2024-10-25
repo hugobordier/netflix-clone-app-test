@@ -3,11 +3,10 @@ import { getMoviesByCategory } from '../config/tmdbApi';
 import MovieCard from './MovieCard';
 import Spinner from '../pages/Spinner';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 
 const responsive = {
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 1900, min: 1024 },
     items: 8,
     slidesToSlide: 3,
   },
@@ -20,6 +19,18 @@ const responsive = {
     breakpoint: { max: 464, min: 0 },
     items: 2,
     slidesToSlide: 1,
+  },
+  superLargeDesktop: {
+    breakpoint: { max: 2400, min: 1900 },
+    items: 10,
+  },
+  supersuperLargeDesktop: {
+    breakpoint: { max: 3000, min: 2400 },
+    items: 13,
+  },
+  supersupersuperLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 18,
   },
 };
 
@@ -65,11 +76,8 @@ const MovieRow = ({ categorie, categorieId }: MovieRowInterface) => {
         <div className="relative ">
           <Carousel
             responsive={responsive}
-            autoPlay={true}
-            autoPlaySpeed={10000}
+            autoPlaySpeed={1000}
             infinite={true}
-            className=""
-            customRightArrow={<div className="absolute right-0"> &gt;</div>}
           >
             {movies.map((movie, index) => {
               return (
