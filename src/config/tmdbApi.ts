@@ -19,6 +19,7 @@ tmdbApi.interceptors.request.use((config) => {
   const cacheKey = `${config.url}?${new URLSearchParams(config.params).toString()}`;
 
   const cachedData = cache.get(cacheKey);
+  console.log(cachedData);
   if (cachedData) {
     console.log('via cache');
     return Promise.reject({ isCached: true, data: cachedData });
@@ -90,6 +91,20 @@ export const getTrailerById = async (movieId: number) => {
       Math.random() * (response.data.results.length + 1)
     );
     return `https://www.youtube.com/watch?v=${response.data.results[randomIndex]?.key}`;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getSearch = async (search: string) => {
+  try {
+    const response = await tmdbApi.get(`/search/movie`, {
+      params: {
+        query: search,
+      },
+    });
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

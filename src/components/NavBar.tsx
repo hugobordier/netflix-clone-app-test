@@ -34,16 +34,14 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
   return (
     <nav className="flex flex-col w-screen h-12 bg-slate-900 md:h-20">
       <ul className="flex items-center justify-between h-full ">
-        <li
-          className="flex items-center w-full"
-          onClick={() => {
-            navigate('/home');
-          }}
-        >
+        <li className="flex items-center w-full ">
           <img
-            className="h-10 md:h-16 animate-slideinLeft"
+            className="h-10 cursor-pointer md:h-16 animate-slideinLeft"
             src={logo}
             alt="logo"
+            onClick={() => {
+              navigate('/home');
+            }}
           />
         </li>
 

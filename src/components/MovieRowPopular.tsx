@@ -45,8 +45,6 @@ const MovieRowPopular = () => {
     fetchMovies();
   }, []);
 
-  useEffect(() => {}, []);
-
   if (loading) {
     return <Spinner />;
   }

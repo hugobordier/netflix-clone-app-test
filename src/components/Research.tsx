@@ -1,23 +1,50 @@
+import { useEffect, useState } from 'react';
+import { getSearch } from '../config/tmdbApi';
+import searchMovie from '../types/searchMovie';
+import MovieCard from './MovieCard';
+
 interface ResearchProps {
   searchTerm: string;
 }
 
 const Research = ({ searchTerm }: ResearchProps) => {
-  return (
-    <div className="absolute top-12 md:top-20 left-0 w-screen h-[calc(100vh-3rem)] bg-black bg-opacity-80 text-white z-40 overflow-auto">
-      {/* Ceci permet d'ajuster la hauteur pour que la NavBar reste visible */}
-      <div className="p-6">
-        <h2 className="text-3xl">Résultats pour : {searchTerm}</h2>
+  const [moviesSearched, setMoviesSearched] = useState<searchMovie | null>(
+    null
+  );
+  const fetchSearch = async (searchTerm: string) => {
+    try {
+      console.log(searchTerm);
+      const response: searchMovie = await getSearch(searchTerm);
+      console.log(response);
+      setMoviesSearched(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
+    fetchSearch(searchTerm);
+  }, [searchTerm]);
+
+  return (
+    <div className="absolute left-0 z-40 w-screen h-full overflow-visible text-white bg-black top-12 md:top-20">
+      <div className="p-6">
+        <h2 className="text-3xl font-extrabold">
+          Résultats pour : {searchTerm}
+        </h2>
         <div className="mt-4">
-          {searchTerm ? (
-            <div>
-              <p>Affichage des résultats pour : {searchTerm}</p>
-              <ul className="mt-2 space-y-2">
-                <li className="p-2 bg-gray-800 rounded">Résultat 1</li>
-                <li className="p-2 bg-gray-800 rounded">Résultat 2</li>
-                <li className="p-2 bg-gray-800 rounded">Résultat 3</li>
-              </ul>
+          {moviesSearched?.results.length !== 0 ? (
+            <div className="grid gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              {moviesSearched?.results
+                .filter((movie) => movie.poster_path !== null) // Filtre les films sans image
+                .map((movie, index) => (
+                  <div
+                    key={index}
+                    className="w-full overflow-hidden rounded-lg"
+                  >
+                    <MovieCard movieId={movie.id} />
+                  </div>
+                ))}
             </div>
           ) : (
             <p>Aucun résultat pour le moment.</p>

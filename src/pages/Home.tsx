@@ -24,19 +24,24 @@ const Home = ({ userData, auth }: HomeProps) => {
   }
 
   return (
-    <div className="h-full overflow-hidden text-white no-scrollbar bg-gradient-to-b from-slate-500 to-slate-950">
+    <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-gradient-to-b from-slate-500 to-slate-950">
       <NavBar
         username={userData.username}
         onSearchChange={handleSearchChange}
         auth={auth}
       />
-      <MovieRowPopular />
-      <MovieRow categorie="Films d'action " categorieId={28} />
-      <MovieRow categorie="Films d'Adventure" categorieId={12} />
-      <MovieRow categorie="Films d'Animation" categorieId={16} />
-      <MovieRow categorie="Films DROLE" categorieId={35} />
-      <MovieRow categorie="Films Famille" categorieId={10751} />
-      {searchInput.length > 0 ? <Research searchTerm={searchInput} /> : <></>}
+      {searchInput.length > 0 ? (
+        <Research searchTerm={searchInput} />
+      ) : (
+        <>
+          <MovieRowPopular />
+          <MovieRow categorie="Films d'action " categorieId={28} />
+          <MovieRow categorie="Films d'Adventure" categorieId={12} />
+          <MovieRow categorie="Films d'Animation" categorieId={16} />
+          <MovieRow categorie="Films DROLE" categorieId={35} />
+          <MovieRow categorie="Films Famille" categorieId={10751} />
+        </>
+      )}
     </div>
   );
 };

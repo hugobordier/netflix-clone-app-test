@@ -25,10 +25,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
     setSearchInput(value);
   };
 
-  if (!userData) {
-    navigate('/login');
-  }
-
   const fetchMovieData = async () => {
     try {
       const movieTMDB = await getMovieById(parseInt(movieId!));
@@ -57,31 +53,39 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   }
 
   return (
-    <div className="h-screen overflow-hidden text-white no-scrollbar bg-gradient-to-b from-slate-900 to-slate-950">
+    <div
+      className={`relative min-h-screen text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
+        searchInput.length > 0 ? 'overflow-hidden' : 'overflow-auto'
+      }`}
+    >
       <NavBar
         username={userData.username}
         onSearchChange={handleSearchChange}
         auth={auth}
       />
-      <div>
-        {movieData.title} , {userData.username}
-      </div>
-      {trailer && <div>{trailer}</div>}
+      {searchInput.length > 0 ? (
+        <Research searchTerm={searchInput} />
+      ) : (
+        <>
+          <div>
+            {movieData.title} , {userData.username}
+          </div>
+          {trailer && <div>{trailer}</div>}
 
-      <div className="flex items-center justify-center w-full h-screen rounded-2xl">
-        <div className="overflow-hidden max-w-7xl aspect-video rounded-2xl">
-          <ReactPlayer
-            url={trailer}
-            playing={true}
-            loop={true}
-            muted={true}
-            width="100%"
-            height="100%"
-          />
-        </div>
-      </div>
-
-      {searchInput.length > 0 ? <Research searchTerm={searchInput} /> : null}
+          <div className="flex items-center justify-center w-full rounded-2xl">
+            <div className="overflow-hidden max-w-7xl aspect-video rounded-2xl">
+              <ReactPlayer
+                url={trailer}
+                playing={true}
+                loop={true}
+                muted={true}
+                width="100%"
+                height="100%"
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
