@@ -81,7 +81,7 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
 
             {isSettingsOpen && (
               <div
-                className="absolute right-0 z-20 w-48 py-2 ml-5 origin-top-right rounded-md shadow-lg top-9 bg-slate-500 border-slate-800"
+                className="absolute right-0 z-50 w-48 py-2 ml-5 origin-top-right rounded-md shadow-lg top-9 bg-slate-500 border-slate-800"
                 onMouseLeave={handleMouseLeave}
               >
                 <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">

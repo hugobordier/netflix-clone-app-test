@@ -44,7 +44,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     fetchMovieData();
   }, []);
@@ -58,7 +57,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   }
 
   return (
-    <div className="h-screen overflow-hidden text-white no-scrollbar bg-gradient-to-b from-slate-500 to-slate-950">
+    <div className="h-screen overflow-hidden text-white no-scrollbar bg-gradient-to-b from-slate-900 to-slate-950">
       <NavBar
         username={userData.username}
         onSearchChange={handleSearchChange}
@@ -68,20 +67,21 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
         {movieData.title} , {userData.username}
       </div>
       {trailer && <div>{trailer}</div>}
-      <div className="flex items-center justify-center w-full ">
-        <div className="flex rounded-3xl w-min">
-          <div className="overflow-hidden rounded-2xl">
-            <ReactPlayer
-              url={trailer}
-              playing={true}
-              loop={true}
-              muted={true}
-            />
-          </div>
+
+      <div className="flex items-center justify-center w-full h-screen rounded-2xl">
+        <div className="overflow-hidden max-w-7xl aspect-video rounded-2xl">
+          <ReactPlayer
+            url={trailer}
+            playing={true}
+            loop={true}
+            muted={true}
+            width="100%"
+            height="100%"
+          />
         </div>
       </div>
 
-      {searchInput.length > 0 ? <Research searchTerm={searchInput} /> : <></>}
+      {searchInput.length > 0 ? <Research searchTerm={searchInput} /> : null}
     </div>
   );
 };
