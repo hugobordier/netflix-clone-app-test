@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { getPopularMovies } from '../config/tmdbApi';
 import Spinner from '../pages/Spinner';
 import Movie from '../types/movie';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 const MovieRowPopular = () => {
@@ -57,9 +56,9 @@ const MovieRowPopular = () => {
   }
 
   return (
-    <div className="relative flex justify-center overflow-hidden h-1/3">
+    <div className="relative flex justify-center overflow-hidden ">
       <div
-        className={`absolute inset-0 z-0 overflow-hidden bg-center bg-cover filter blur-lg transition-all duration-700 ease-in-out`}
+        className={`absolute inset-0 z-0 overflow-hidden bg-center bg-cover  filter blur-lg transition-all duration-700 ease-in-out`}
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/w500${movies[currentSlide].posterPath})`,
         }}
@@ -71,12 +70,12 @@ const MovieRowPopular = () => {
         className={`relative z-10 flex items-center justify-between w-5/6 h-full animate-slideDown`}
       >
         <div className={`w-full `}>
-          <p className="w-5/6 font-extrabold text-7xl">
+          <p className="w-5/6 text-3xl font-extrabold md:text-4xl lg:text-6xl xl:text-7xl">
             {movies[currentSlide].title}
           </p>
         </div>
 
-        <div className="flex justify-center w-full h-full">
+        <div className="flex justify-center w-full h-full ">
           <img
             className={`flex h-full `}
             src={`https://image.tmdb.org/t/p/w500${movies[currentSlide].posterPath}`}
@@ -84,7 +83,7 @@ const MovieRowPopular = () => {
           />
         </div>
 
-        <div className={`w-full flex justify-end`}>
+        <div className={`w-full xl:flex justify-end hidden`}>
           <div className="w-5/6 p-4 rounded-lg bg-slate-700/50">
             <p className="text-lg">{movies[currentSlide].overview}</p>
           </div>

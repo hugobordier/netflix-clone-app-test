@@ -60,7 +60,7 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
           <a className="text-white rounded cursor-pointer hover:text-blue-700 md:bg-transparent md:p-0">
             Ma Liste
           </a>
-          <div className="relative">
+          <div className="relative mr-2 md:mr-0">
             <button
               className="flex gap-2 text-white rounded cursor-pointer hover:text-blue-700 md:bg-transparent md:p-0"
               onMouseEnter={handleMouseEnter}

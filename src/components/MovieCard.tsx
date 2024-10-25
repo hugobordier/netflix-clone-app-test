@@ -72,12 +72,10 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
           <div className="object-cover w-full h-full rounded-lg pointer-events-none" />
         </div>
 
-        <h2 className="mt-4 text-center text-white select-none md:font-bold">
-          loading...
-        </h2>
+        <div className="relative md:h-[240px] w-full h-[180px] bg-gray-700 animate-pulse rounded-lg"></div>
 
         <p className="hidden mt-2 text-xs text-center md:block text-slate-200">
-          Durée: minutes
+          Durée: ...minutes
         </p>
       </div>
     );
@@ -122,7 +120,7 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
         />
       </div>
 
-      <h2 className="mt-4 text-center text-white select-none md:font-bold">
+      <h2 className="hidden mt-4 text-center text-white select-none  md:block md:font-bold">
         {movieData.title}
       </h2>
 
