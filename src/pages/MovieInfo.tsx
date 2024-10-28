@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getMovieById, getTrailerById } from '../config/tmdbApi';
 import { useEffect, useState } from 'react';
 import movieFull from '../types/movieFull';
@@ -20,6 +20,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   const [trailer, setTrailer] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearchChange = (value: string) => {
     setSearchInput(value);
@@ -43,6 +44,12 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   useEffect(() => {
     fetchMovieData();
   }, []);
+
+  useEffect(() => {
+    console.log('Location changed');
+    setSearchInput('');
+    fetchMovieData();
+  }, [location]);
 
   if (!movieData) {
     return (

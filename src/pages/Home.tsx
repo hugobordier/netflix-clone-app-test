@@ -6,6 +6,7 @@ import MovieRow from '../components/MoviesRow';
 import MovieRowPopular from '../components/MovieRowPopular';
 import User from '../types/user';
 import { Auth } from 'firebase/auth';
+import { useLocation } from 'react-router-dom';
 
 type HomeProps = {
   userData: User;
@@ -16,6 +17,7 @@ type HomeProps = {
 const Home = ({ userData, auth }: HomeProps) => {
   const [searchInput, setSearchInput] = useState('');
   const [isScreenSmall, setIsScreenSmall] = useState(false);
+  const location = useLocation();
 
   const handleSearchChange = (value: string) => {
     setSearchInput(value);
@@ -30,6 +32,15 @@ const Home = ({ userData, auth }: HomeProps) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    console.log('Location changed');
+    setSearchInput('');
+
+    return () => {
+      setSearchInput('');
+    };
+  }, [location]);
 
   if (!userData) {
     return <Spinner />;

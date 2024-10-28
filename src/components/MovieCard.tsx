@@ -53,6 +53,7 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
       const clickDuration = Date.now() - clickStartTime;
 
       if (clickDuration < 100) {
+        console.log('hello');
         handleNavigate();
       }
 
@@ -119,7 +120,7 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
         />
       </div>
 
-      <h2 className="hidden mt-4 text-center text-white select-none  md:block md:font-bold">
+      <h2 className="hidden mt-4 text-center text-white select-none md:block md:font-bold">
         {movieData.title}
       </h2>
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getSearch } from '../config/tmdbApi';
 import searchMovie from '../types/searchMovie';
 import MovieCard from './MovieCard';
+import { useLocation } from 'react-router-dom';
 
 interface ResearchProps {
   searchTerm: string;
@@ -40,7 +41,7 @@ const Research = ({ searchTerm }: ResearchProps) => {
                     key={index}
                     className="w-full overflow-hidden rounded-lg"
                   >
-                    <MovieCard movieId={movie.id} />
+                    <MovieCard movieId={movie.id} isScreenSmall={false} />
                   </div>
                 ))}
             </div>
