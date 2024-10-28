@@ -5,27 +5,15 @@ import Movie from '../types/movie';
 
 interface MovieCardProps {
   movieId: number;
+  isScreenSmall: boolean;
 }
 
-const MovieCard = ({ movieId }: MovieCardProps) => {
+const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
   const [movieData, setMovieData] = useState<Movie | null>(null);
   const [clickStartTime, setClickStartTime] = useState<number | null>(null);
   const [isCardHover, setIsCardHover] = useState(false);
   const navigate = useNavigate();
-  const [isScreenSmall, setIsScreenSmall] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsScreenSmall(window.innerWidth < 750);
-    };
-
-    handleResize();
-    console.log(isScreenSmall, 'xwow');
-    // window.addEventListener('resize', handleResize);
-    // return () => window.removeEventListener('resize', handleResize);
-  }, [isScreenSmall]);
-
-  // Mouse hover handlers
   const handleMouseEnter = () => {
     setIsCardHover(true);
   };
@@ -34,7 +22,6 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
     setIsCardHover(false);
   };
 
-  // Fetch movie data
   const fetchMovieData = async () => {
     try {
       const movieTMDB = await getMovieById(movieId);
@@ -132,8 +119,8 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
         />
       </div>
 
-      <h2 className="hidden mt-4 text-center text-white select-none md:block md:font-bold">
-        {movieData.title}
+      <h2 className="mt-4 text-center text-white select-none md:block md:font-bold">
+        {movieData.title} a {isScreenSmall ? 'small' : 'not'} b
       </h2>
 
       <p className="hidden mt-2 text-xs text-center md:block text-slate-200">

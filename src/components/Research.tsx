@@ -13,9 +13,7 @@ const Research = ({ searchTerm }: ResearchProps) => {
   );
   const fetchSearch = async (searchTerm: string) => {
     try {
-      console.log(searchTerm);
       const response: searchMovie = await getSearch(searchTerm);
-      console.log(response);
       setMoviesSearched(response);
     } catch (error) {
       console.error(error);

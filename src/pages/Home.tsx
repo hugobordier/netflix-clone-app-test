@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from './Spinner';
 import NavBar from '../components/NavBar';
 import Research from '../components/Research';
@@ -15,9 +15,21 @@ type HomeProps = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Home = ({ userData, auth }: HomeProps) => {
   const [searchInput, setSearchInput] = useState('');
+  const [isScreenSmall, setIsScreenSmall] = useState(false);
+
   const handleSearchChange = (value: string) => {
     setSearchInput(value);
   };
+
+  const handleResize = () => {
+    setIsScreenSmall(window.innerWidth < 750);
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (!userData) {
     return <Spinner />;
@@ -35,11 +47,31 @@ const Home = ({ userData, auth }: HomeProps) => {
       ) : (
         <>
           <MovieRowPopular />
-          <MovieRow categorie="Films d'action " categorieId={28} />
-          <MovieRow categorie="Films d'Adventure" categorieId={12} />
-          <MovieRow categorie="Films d'Animation" categorieId={16} />
-          <MovieRow categorie="Films DROLE" categorieId={35} />
-          <MovieRow categorie="Films Famille" categorieId={10751} />
+          <MovieRow
+            categorie="Films d'action "
+            categorieId={28}
+            isScreenSmall={isScreenSmall}
+          />
+          <MovieRow
+            categorie="Films d'Adventure"
+            categorieId={12}
+            isScreenSmall={isScreenSmall}
+          />
+          <MovieRow
+            categorie="Films d'Animation"
+            categorieId={16}
+            isScreenSmall={isScreenSmall}
+          />
+          <MovieRow
+            categorie="Films DROLE"
+            categorieId={35}
+            isScreenSmall={isScreenSmall}
+          />
+          <MovieRow
+            categorie="Films Famille"
+            categorieId={10751}
+            isScreenSmall={isScreenSmall}
+          />
         </>
       )}
     </div>

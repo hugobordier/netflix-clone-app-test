@@ -5,7 +5,6 @@ const API_KEY = '3330bf5ad1514d752a4cce6fea38a7b6';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const cache = createCache(500, 300000);
-console.log('test');
 
 const tmdbApi = axios.create({
   baseURL: BASE_URL,
@@ -19,7 +18,6 @@ tmdbApi.interceptors.request.use((config) => {
   const cacheKey = `${config.url}?${new URLSearchParams(config.params).toString()}`;
 
   const cachedData = cache.get(cacheKey);
-  console.log(cachedData);
   if (cachedData) {
     console.log('via cache');
     return Promise.reject({ isCached: true, data: cachedData });

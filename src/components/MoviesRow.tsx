@@ -37,9 +37,14 @@ const responsive = {
 interface MovieRowInterface {
   categorie: string;
   categorieId: number;
+  isScreenSmall: boolean;
 }
 
-const MovieRow = ({ categorie, categorieId }: MovieRowInterface) => {
+const MovieRow = ({
+  categorie,
+  categorieId,
+  isScreenSmall,
+}: MovieRowInterface) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [movies, setMovies] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,7 +117,7 @@ const MovieRow = ({ categorie, categorieId }: MovieRowInterface) => {
                   key={index}
                   className="flex items-center justify-center p-1"
                 >
-                  <MovieCard movieId={movie.id} />
+                  <MovieCard movieId={movie.id} isScreenSmall={isScreenSmall} />
                 </div>
               );
             })}
