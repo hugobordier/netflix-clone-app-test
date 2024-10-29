@@ -144,21 +144,21 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
               update={updateIsToastVisible}
             />
           )}
-          <div className="flex flex-col-reverse items-center justify-center w-full space-y-4 h-2/3 md:flex-row min-h-[700px] md:space-y-0">
-            <div className="flex h-[95%] items-center justify-around w-[95%] md:bg-slate-800 rounded-md p-4  md:p-6 md:flex-row flex-col">
+          <div className="flex flex-col-reverse items-center justify-center w-full mt-4 space-y-4  md:flex-row h-full md:max-h-[800px] md:min-h-[650px] md:space-y-0">
+            <div className="flex max-h-[95%] h-[95%] items-center justify-around w-[95%] md:bg-slate-800 rounded-md p-10  md:p-6 md:flex-row flex-col">
               {/* c la que ca passe de rox a a col */}
               <div
-                className={`justify-center w-full max-w-xl h-[95%] overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
+                className={`justify-center w-full max-w-xl h-[90%] overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
                 onClick={handleClick}
               >
                 <img
-                  className="object-contain h-full px-2 rounded-lg pointer-events-none min-w-24 max-h-[554px] min-h-52 md:w-full md:min-w-72 md:px-4"
+                  className="object-contain h-full px-2 rounded-lg pointer-events-none min-w-24 maw-h-5/6 min-h-52 md:w-full md:min-w-72 md:px-4"
                   src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                   alt={movieData.title}
                 />
               </div>
               {/* Separator for larger screens */}
-              <div className="items-center justify-center hidden w-1/12 h-full md:flex ">
+              <div className="items-center justify-center hidden w-1/12 md:flex ">
                 <div className="w-[2%] h-5/6 bg-white rounded-xl"></div>
               </div>
               {/* Text Information */}
@@ -166,7 +166,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                 <h2 className="top-0 items-start w-full py-4 text-lg font-bold text-left md:text-3xl">
                   {movieData.title}
                 </h2>
-                <p className="self-center text-sm justify-self-center md:text-base ">
+                <p className="text-sm justify-self-center max-w-[800px] md:text-base">
                   {movieData.overview}
                 </p>
                 <p className="flex pt-3 space-x-1 text-sm md:text-lg lg:text-lg 2xl:text-xl">
@@ -210,7 +210,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     }}
                   >
                     <textarea
-                      className="w-full h-[90%] p-2 text-sm text-black rounded-lg"
+                      className="w-full h-full p-2 text-sm text-black rounded-lg"
                       value={messageForm}
                       onChange={(e) => setMessageForm(e.target.value)}
                       placeholder="Entrez votre message"
@@ -224,7 +224,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                       Envoyer
                     </button>
                   </form>
-                  <div className="w-full h-3 bg-green-300"></div>
+                  <div className="w-full h-auto bg-green-600 bottom-2 right-2"></div>
                 </div>
               </div>
             </div>
@@ -243,7 +243,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
               />
             </div>
           </div>
-          <div className="w-full bg-fuchsia-900"></div>
+          <div className="  w-1 h-[4652px]"></div>
         </div>
       )}
     </div>
