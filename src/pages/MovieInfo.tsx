@@ -50,7 +50,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       );
       await addDoc(messagesRef, {
         message: messageForm,
-        movieId: movieId,
         userId: currentUser,
         timestamp: new Date(),
       });
@@ -105,7 +104,12 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       }`}
     >
       {isAnimating && (
-        <Confetti numberOfPieces={2000} recycle={false} gravity={0.2} />
+        <Confetti
+          numberOfPieces={2000}
+          recycle={false}
+          gravity={0.2}
+          className="w-full h-screen"
+        />
       )}
       <NavBar
         username={userData.username}
@@ -115,16 +119,16 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       {searchInput.length > 0 ? (
         <Research searchTerm={searchInput} />
       ) : (
-        <div className="md:h-[calc(100vh-80px)] h-[calc(100vh-48px)]">
-          <div className="flex flex-col items-center justify-center w-full space-y-4 md:flex-row h-2/3 md:space-y-0">
+        <div className="md:h-[calc(100vh-80px)] min-h-[calc(100vh-48px)]">
+          <div className="flex flex-col-reverse items-center justify-center w-full space-y-4 md:flex-row h-2/3 md:space-y-0">
             <div className="flex h-[95%] items-center justify-around w-[95%] md:bg-slate-800 rounded-md p-4 md:p-6 md:flex-row flex-col">
               {/* c la que ca passe de rox a a col */}
               <div
-                className={`justify-center w-full h-[95%] overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
+                className={`justify-center w-full max-w-xl h-[95%] overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
                 onClick={handleClick}
               >
                 <img
-                  className="object-contain h-full px-2 rounded-lg pointer-events-none min-h-52 md:w-full min-w-72 md:px-4"
+                  className="object-contain h-full px-2 rounded-lg pointer-events-none min-w-24 min-h-52 md:w-full md:min-w-72 md:px-4"
                   src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                   alt={movieData.title}
                 />
@@ -134,14 +138,14 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                 <div className="w-[2%] h-5/6 bg-white rounded-xl"></div>
               </div>
               {/* Text Information */}
-              <div className="flex flex-col w-full h-full text-xs md:text-base">
+              <div className="flex flex-col w-full h-full text-xs md:text-base ">
                 <h2 className="top-0 items-start w-full py-4 text-lg font-bold text-left md:text-3xl">
                   {movieData.title}
                 </h2>
-                <p className="self-center text-sm justify-self-center md:text-base">
+                <p className="self-center text-sm justify-self-center md:text-base ">
                   {movieData.overview}
                 </p>
-                <p className="flex pt-3 space-x-1 text-sm md:text-lg">
+                <p className="flex pt-3 space-x-1 text-sm md:text-lg lg:text-lg 2xl:text-xl">
                   <span className="font-bold">Genre :</span>
                   {movieData.genres.map((genre, index) => (
                     <span key={genre.id}>
@@ -150,32 +154,32 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     </span>
                   ))}
                 </p>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
                   <span className="font-bold">Popularité : </span>
                   {movieData.popularity}
                 </p>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
                   <span className="font-bold">Durée : </span>
                   {movieData.runtime} minutes
                 </p>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
                   <span className="font-bold">Date de sortie : </span>
                   {movieData.release_date}
                 </p>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
                   <span className="font-bold">Votes : </span>
                   {movieData.vote_average}/10
                 </p>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
                   <span className="font-bold">Nombre de votes : </span>
                   {movieData.vote_count}
                 </p>
-                <div className="flex flex-col items-center justify-start w-full h-full pt-2">
+                <div className="flex flex-col items-center justify-start w-full h-full pt-2 ">
                   <p className="pb-1 font-extrabold text-transparent bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
-                    Laissez un message, svp {messageForm}
+                    Laissez un message, svp
                   </p>
                   <form
-                    className="w-5/6 h-1/2"
+                    className="w-5/6 h-1/2 max-w-7xl"
                     onSubmit={(e) => {
                       handleSubmit(messageForm, e);
                     }}
@@ -213,6 +217,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
               />
             </div>
           </div>
+          <div className="w-full bg-fuchsia-900"></div>
         </div>
       )}
     </div>
