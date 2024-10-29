@@ -3,3 +3,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CSS pour rendre la scrollbar plus discrète */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px; /* Largeur de la scrollbar */
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent; /* Fond de la track de la scrollbar */
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2); /* Couleur de la scrollbar */
+    border-radius: 10px; /* Bord arrondi */
+    border: 1px solid transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4); /* Couleur de la scrollbar au survol */
+  }
+  

@@ -1,3 +1,5 @@
+import { transform } from 'typescript';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -51,8 +53,19 @@ export default {
           },
           "100%": {
               transform: "scale3d(1, 1, 1)"
-          },
+          },    
       },
+      rotateFull: {
+            "0%": {
+              transform: "rotate3d(0, 1, 0, 0deg) scale(1)",
+            },
+            "50%" : {
+              transform : "rotate3d(0.5, 1, 0.25, 360deg) scale(0.5)"
+            },
+            "100%": {
+              transform: "rotate3d(0.5, 1, 0.25, 720deg) scale(1)", 
+            },
+          },
       },
       animation: {
         slidein: "slide 1s ease-out",
@@ -62,6 +75,7 @@ export default {
         slideDown: "slideDown 1s ease-out",
         slideUp: "slideUp 1s ease-out",
         jiggle: 'jiggle 0.6s ease-in-out 0.25s 1',
+        rotateFull : 'rotateFull 0.8s cubic-bezier(0.4, 0, 0.2, 1)  ',
       },
     },
   },

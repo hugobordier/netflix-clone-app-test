@@ -86,8 +86,9 @@ export const getTrailerById = async (movieId: number) => {
       },
     });
     const randomIndex = Math.floor(
-      Math.random() * (response.data.results.length + 1)
+      Math.random() * response.data.results.length
     );
+    console.log(randomIndex);
     return `https://www.youtube.com/watch?v=${response.data.results[randomIndex]?.key}`;
   } catch (error) {
     console.error(error);

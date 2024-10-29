@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { auth, db } from './config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import User from './types/user';
+import Test from './pages/Test';
 
 function App() {
   const [userData, setUserData] = useState<User | null>(null);
@@ -80,6 +81,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/spinner" element={<Spinner />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/test" element={<Test />} />
         <Route path="/*" element={<Page404 />} />
         <Route
           path="/home"

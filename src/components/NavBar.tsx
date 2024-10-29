@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import logo from '../assets/logo.png';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Auth, signOut } from 'firebase/auth';
 
 interface NavBarProps {
