@@ -109,3 +109,17 @@ export const getSearch = async (search: string) => {
     throw error;
   }
 };
+
+export const getReviews = async (movieId: number) => {
+  try {
+    const response = await tmdbApi.get(`/movie/${movieId}/reviews`, {
+      params: {
+        language: '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

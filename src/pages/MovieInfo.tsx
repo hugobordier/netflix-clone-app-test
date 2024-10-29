@@ -11,6 +11,7 @@ import { Auth } from 'firebase/auth';
 import Confetti from 'react-confetti';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import Toast from '../components/Toast';
 
 type MovieInfoProps = {
   userData: User;
@@ -26,6 +27,20 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   const location = useLocation();
   const [messageForm, setMessageForm] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isToastVisible, setIsToastVisible] = useState(false);
+
+  const updateIsToastVisible = (bool: boolean) => {
+    setIsToastVisible(bool);
+  };
+
+  useEffect(() => {
+    if (isToastVisible) {
+      const timer = setTimeout(() => {
+        setIsToastVisible(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [isToastVisible]);
 
   const handleClick = () => {
     setIsAnimating(true);
@@ -53,7 +68,10 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
         userId: currentUser,
         timestamp: new Date(),
       });
-      setMessageForm('');
+      const timer = setTimeout(() => {
+        setMessageForm('');
+      }, 4000);
+      return () => clearTimeout(timer);
     } catch (err) {
       console.error(err);
       setMessageForm('Erreur : votre message n’a pas pu être envoyé.');
@@ -99,7 +117,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
 
   return (
     <div
-      className={`relative min-h-screen text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
+      className={`relative min-h-screen  text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
         searchInput.length > 0 ? 'overflow-hidden' : ''
       }`}
     >
@@ -108,7 +126,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           numberOfPieces={2000}
           recycle={false}
           gravity={0.2}
-          className="w-full h-screen"
+          className="w-full h-screen md:w-auto md:h-auto"
         />
       )}
       <NavBar
@@ -120,15 +138,21 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
         <Research searchTerm={searchInput} />
       ) : (
         <div className="md:h-[calc(100vh-80px)] min-h-[calc(100vh-48px)]">
-          <div className="flex flex-col-reverse items-center justify-center w-full space-y-4 md:flex-row h-2/3 md:space-y-0">
-            <div className="flex h-[95%] items-center justify-around w-[95%] md:bg-slate-800 rounded-md p-4 md:p-6 md:flex-row flex-col">
+          {isToastVisible && (
+            <Toast
+              message={`Votre message : ${messageForm} a bien été envoyé`}
+              update={updateIsToastVisible}
+            />
+          )}
+          <div className="flex flex-col-reverse items-center justify-center w-full space-y-4 h-2/3 md:flex-row min-h-[700px] md:space-y-0">
+            <div className="flex h-[95%] items-center justify-around w-[95%] md:bg-slate-800 rounded-md p-4  md:p-6 md:flex-row flex-col">
               {/* c la que ca passe de rox a a col */}
               <div
                 className={`justify-center w-full max-w-xl h-[95%] overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
                 onClick={handleClick}
               >
                 <img
-                  className="object-contain h-full px-2 rounded-lg pointer-events-none min-w-24 min-h-52 md:w-full md:min-w-72 md:px-4"
+                  className="object-contain h-full px-2 rounded-lg pointer-events-none min-w-24 max-h-[554px] min-h-52 md:w-full md:min-w-72 md:px-4"
                   src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                   alt={movieData.title}
                 />
@@ -179,8 +203,9 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     Laissez un message, svp
                   </p>
                   <form
-                    className="w-5/6 h-1/2 max-w-7xl"
+                    className="flex flex-col w-5/6 gap-3 h-3/4 max-w-7xl"
                     onSubmit={(e) => {
+                      setIsToastVisible(true);
                       handleSubmit(messageForm, e);
                     }}
                   >
@@ -199,6 +224,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                       Envoyer
                     </button>
                   </form>
+                  <div className="w-full h-3 bg-green-300"></div>
                 </div>
               </div>
             </div>
