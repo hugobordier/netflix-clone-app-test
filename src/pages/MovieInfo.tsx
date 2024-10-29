@@ -9,7 +9,7 @@ import Spinner from './Spinner';
 import User from '../types/user';
 import { Auth } from 'firebase/auth';
 import Confetti from 'react-confetti';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import Toast from '../components/Toast';
 
@@ -117,7 +117,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
 
   return (
     <div
-      className={`relative min-h-screen  text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
+      className={`relative min-h-screen h-full text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
         searchInput.length > 0 ? 'overflow-hidden' : ''
       }`}
     >
@@ -137,7 +137,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       {searchInput.length > 0 ? (
         <Research searchTerm={searchInput} />
       ) : (
-        <div className="md:h-[calc(100vh-80px)] min-h-[calc(100vh-48px)]">
+        <div className="  md:h-[calc(100vh-80px)] min-h-[calc(100vh-48px)]">
           {isToastVisible && (
             <Toast
               message={`Votre message : ${messageForm} a bien été envoyé`}
@@ -223,6 +223,44 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     >
                       Envoyer
                     </button>
+                    <div className=" flex justify-end">
+                      <div className="p-2 cursor-pointer">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          className="lucide lucide-heart-off"
+                        >
+                          <line x1="2" y1="2" x2="22" y2="22" />
+                          <path d="M16.5 16.5 12 21l-7-7c-1.5-1.45-3-3.2-3-5.5a5.5 5.5 0 0 1 2.14-4.35" />
+                          <path d="M8.76 3.1c1.15.22 2.13.78 3.24 1.9 1.5-1.5 2.74-2 4.5-2A5.5 5.5 0 0 1 22 8.5c0 2.12-1.3 3.78-2.67 5.17" />
+                        </svg>
+                      </div>
+                      <div className="cursor-pointer p-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="lucide lucide-star-off"
+                        >
+                          <path d="M8.34 8.34 2 9.27l5 4.87L5.82 21 12 17.77 18.18 21l-.59-3.43" />
+                          <path d="M18.42 12.76 22 9.27l-6.91-1L12 2l-1.44 2.91" />
+                          <line x1="2" x2="22" y1="2" y2="22" />
+                        </svg>
+                      </div>
+                    </div>
                   </form>
                   <div className="w-full h-auto bg-green-600 bottom-2 right-2"></div>
                 </div>
@@ -231,19 +269,21 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           </div>
 
           {/* Trailer Section */}
-          <div className="flex items-center justify-center w-full mt-6 rounded-2xl md:mt-12">
-            <div className="overflow-hidden max-w-7xl aspect-video rounded-2xl">
-              <ReactPlayer
-                url={trailer}
-                playing={true}
-                loop={true}
-                muted={true}
-                width="100%"
-                height="100%"
-              />
+
+          <div className="bg-slate-900 w-full h-[4652px]">
+            <div className="w-full flex py-5 justify-center items-center">
+              <div className="overflow-hidden w-11/12 max-w-7xl aspect-video rounded-2xl">
+                <ReactPlayer
+                  url={trailer}
+                  playing={true}
+                  loop={true}
+                  muted={true}
+                  width="100%"
+                  height="100%"
+                />
+              </div>
             </div>
           </div>
-          <div className="  w-1 h-[4652px]"></div>
         </div>
       )}
     </div>
