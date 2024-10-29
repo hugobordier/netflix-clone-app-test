@@ -9,6 +9,8 @@ import Spinner from './Spinner';
 import User from '../types/user';
 import { Auth } from 'firebase/auth';
 import Confetti from 'react-confetti';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 type MovieInfoProps = {
   userData: User;
@@ -27,10 +29,36 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
 
   const handleClick = () => {
     setIsAnimating(true);
-    console.log('gogog');
     setTimeout(() => {
       setIsAnimating(false);
     }, 5000);
+  };
+
+  const handleSubmit = async (
+    messageForm: string,
+    e: { preventDefault: () => void }
+  ) => {
+    e.preventDefault();
+    const currentUser = auth.currentUser!.uid;
+
+    try {
+      const messagesRef = collection(
+        db,
+        'MessageMovie',
+        movieId!.toString(),
+        'messages'
+      );
+      await addDoc(messagesRef, {
+        message: messageForm,
+        movieId: movieId,
+        userId: currentUser,
+        timestamp: new Date(),
+      });
+      setMessageForm('');
+    } catch (err) {
+      console.error(err);
+      setMessageForm('Erreur : votre message n’a pas pu être envoyé.');
+    }
   };
 
   const handleSearchChange = (value: string) => {
@@ -149,8 +177,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                   <form
                     className="w-5/6 h-1/2"
                     onSubmit={(e) => {
-                      e.preventDefault();
-                      return false;
+                      handleSubmit(messageForm, e);
                     }}
                   >
                     <textarea
@@ -160,13 +187,14 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                       placeholder="Entrez votre message"
                       required
                     />
+
+                    <button
+                      className="text-white bg-gradient-to-r w-full from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      type="submit"
+                    >
+                      Envoyer
+                    </button>
                   </form>
-                  <button
-                    className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                    type="submit"
-                  >
-                    Envoye
-                  </button>
                 </div>
               </div>
             </div>
