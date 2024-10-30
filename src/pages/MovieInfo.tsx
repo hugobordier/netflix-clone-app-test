@@ -12,6 +12,7 @@ import Confetti from 'react-confetti';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import Toast from '../components/Toast';
+import Separator from '../components/Separator';
 
 type MovieInfoProps = {
   userData: User;
@@ -117,7 +118,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
 
   return (
     <div
-      className={`relative min-h-screen h-full text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
+      className={`relative  h-fit text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
         searchInput.length > 0 ? 'overflow-hidden' : ''
       }`}
     >
@@ -126,7 +127,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           numberOfPieces={2000}
           recycle={false}
           gravity={0.2}
-          className="w-full h-screen md:w-auto md:h-auto"
+          className="w-full h-screen "
         />
       )}
       <NavBar
@@ -137,7 +138,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       {searchInput.length > 0 ? (
         <Research searchTerm={searchInput} />
       ) : (
-        <div className="  md:h-[calc(100vh-80px)] min-h-[calc(100vh-48px)]">
+        <div className="  md:minh-[calc(100vh-80px)] min-h-[calc(100vh-48px)]">
           {isToastVisible && (
             <Toast
               message={`Votre message : ${messageForm} a bien été envoyé`}
@@ -145,10 +146,10 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
             />
           )}
           <div className="flex flex-col-reverse items-center justify-center w-full mt-4 space-y-4  md:flex-row h-full md:max-h-[800px] md:min-h-[650px] md:space-y-0">
-            <div className="flex max-h-[95%] h-[95%] items-center justify-around w-[95%] md:bg-slate-800 rounded-md p-10  md:p-6 md:flex-row flex-col">
+            <div className="flex max-h-[95%] h-[95%] items-center justify-around  w-[95%] md:bg-slate-800 rounded-md p-10  md:p-6 md:flex-row flex-col">
               {/* c la que ca passe de rox a a col */}
               <div
-                className={`justify-center w-full max-w-xl h-[90%] overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
+                className={`justify-center w-full  max-w-lg  overflow-hidden cursor-pointer flex select-none ${isAnimating ? 'animate-rotateFull' : ''}`}
                 onClick={handleClick}
               >
                 <img
@@ -305,8 +306,9 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           </div>
 
           {/* Trailer Section */}
+          <Separator />
 
-          <div className="bg-slate-900 w-full h-[4652px]">
+          <div className="w-full h-[4652px]">
             <div className="flex items-center justify-center w-full py-5">
               <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
                 <ReactPlayer
