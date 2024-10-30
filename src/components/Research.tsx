@@ -32,7 +32,7 @@ const Research = ({ searchTerm }: ResearchProps) => {
         </h2>
         <div className="mt-4 h-[90vh] overflow-y-auto no-scrollbar">
           {moviesSearched?.results.length !== 0 ? (
-            <div className="grid grid-cols-2 gap-2 p-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9">
+            <div className="grid grid-cols-2 gap-2 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9">
               {moviesSearched?.results
                 .filter((movie) => movie.backdrop_path !== null)
                 .filter((movie) => movie.poster_path !== null)

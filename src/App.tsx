@@ -11,6 +11,7 @@ import { auth, db } from './config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import User from './types/user';
 import Test from './pages/Test';
+import Footer from './components/Footer';
 
 function App() {
   const [userData, setUserData] = useState<User | null>(null);
@@ -92,6 +93,7 @@ function App() {
           element={<MovieInfo userData={userData} auth={auth} />}
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

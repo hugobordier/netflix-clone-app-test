@@ -67,7 +67,7 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
 
   if (!movieData) {
     return (
-      <div className="w-[140px] md:w-[180px] py-4 px-2 bg-transparent flex flex-col items-center transition duration-300 transform hover:scale-105">
+      <div className="w-[140px] border-red-50 md:w-[180px] py-4 px-2 bg-transparent flex flex-col items-center transition duration-300 transform hover:scale-105">
         <div className="relative md:h-[240]">
           <div className="object-cover w-full h-full rounded-lg pointer-events-none" />
         </div>

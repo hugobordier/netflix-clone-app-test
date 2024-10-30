@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { Auth, signOut } from 'firebase/auth';
@@ -12,15 +12,8 @@ interface NavBarProps {
 
 const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
-
-  const handleMouseEnter = () => {
-    setIsSettingsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsSettingsOpen(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -30,6 +23,28 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
       console.error('Erreur lors de la déconnexion :', error);
     }
   };
+
+  const handleMouseEnter = () => {
+    setIsSettingsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsSettingsOpen(false);
+  };
+
+  const handleSettingsToggle = () => {
+    setIsSettingsOpen((prev) => !prev);
+  };
+
+  const handleResize = () => {
+    setIsSmallScreen(window.innerWidth < 768);
+    setIsSettingsOpen(false); // ferme le menu en cas de redimensionnement
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <nav className="flex flex-col w-screen h-12 bg-slate-900 md:h-20">
@@ -55,13 +70,18 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
         </li>
 
         <li className="flex flex-row items-center justify-end w-full gap-4 animate-slideinRight">
-          <a className="text-white rounded cursor-pointer hover:text-blue-700 md:bg-transparent md:p-0">
+          <a className="hidden text-white rounded cursor-pointer md:block hover:text-blue-700 md:bg-transparent md:p-0">
             Ma Liste
           </a>
-          <div className="relative mr-2 md:mr-0">
+
+          {/* Bouton et menu déroulant des paramètres */}
+          <div className="relative">
             <button
               className="flex gap-2 text-white rounded cursor-pointer hover:text-blue-700 md:bg-transparent md:p-0"
-              onMouseEnter={handleMouseEnter}
+              onClick={isSmallScreen ? handleSettingsToggle : undefined}
+              onMouseEnter={
+                !isSmallScreen ? () => setIsSettingsOpen(true) : undefined
+              }
             >
               Settings
               <svg
@@ -80,13 +100,18 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
             {isSettingsOpen && (
               <div
                 className="absolute right-0 z-50 w-48 py-2 ml-5 origin-top-right rounded-md shadow-lg top-9 bg-slate-500 border-slate-800"
-                onMouseLeave={handleMouseLeave}
+                onMouseLeave={
+                  !isSmallScreen ? () => setIsSettingsOpen(false) : undefined
+                }
               >
                 <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">
                   Profile
                 </a>
                 <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">
                   Account
+                </a>
+                <a className="block px-4 py-2 text-sm text-white md:hidden hover:bg-gray-400">
+                  Ma liste
                 </a>
                 <a
                   className="flex justify-between px-4 py-2 text-sm text-white hover:bg-gray-400"
@@ -110,7 +135,7 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
             )}
           </div>
 
-          <div className="relative hidden pr-2 ml-3 md:block">
+          <div className="relative pr-2 ml-3 md:block">
             <div className="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-2">
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-gray-400"
