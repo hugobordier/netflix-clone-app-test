@@ -13,6 +13,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import Toast from '../components/Toast';
 import Separator from '../components/Separator';
+import Reviews from '../components/Reviews';
 
 type MovieInfoProps = {
   userData: User;
@@ -29,9 +30,22 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   const [messageForm, setMessageForm] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isToastVisible, setIsToastVisible] = useState(false);
+  const [isTrailerNull, setIsTrailerNull] = useState(false);
 
   const updateIsToastVisible = (bool: boolean) => {
     setIsToastVisible(bool);
+  };
+
+  const isTrailerNullFunction = (trailer: string) => {
+    const test = trailer.split('=', 2);
+    console.log(test, trailer);
+    if (test[1] !== 'undefined') {
+      setIsTrailerNull(false);
+      console.log('false');
+    } else {
+      setIsTrailerNull(true);
+      console.log('true');
+    }
   };
 
   useEffect(() => {
@@ -89,6 +103,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       setMovieData(movieTMDB);
       const trailerUrl = await getTrailerById(parseInt(movieId!));
       setTrailer(trailerUrl);
+      isTrailerNullFunction(trailerUrl);
     } catch (error) {
       console.error(
         'Erreur lors de la récupération des données du film',
@@ -97,7 +112,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       navigate('/404');
     }
   };
-
   useEffect(() => {
     fetchMovieData();
   }, []);
@@ -117,11 +131,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   }
 
   return (
-    <div
-      className={`relative  h-fit text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-900 ${
-        searchInput.length > 0 ? 'overflow-hidden' : ''
-      }`}
-    >
+    <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-gradient-to-b from-slate-950 to-slate-700">
       {isAnimating && (
         <Confetti
           numberOfPieces={2000}
@@ -181,9 +191,9 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                 </p>
                 <p className="relative flex text-sm md:text-base lg:text-base 2xl:text-xl">
                   <span className="font-bold">Popularité : </span>
-                  {movieData.popularity}%
+                  {movieData.popularity}
                   <span className="relative flex h-5 pl-2">
-                    {Array(Math.floor(movieData.popularity / 5))
+                    {Array(Math.floor(movieData.popularity / 40))
                       .fill(0)
                       .map((_, index) => (
                         <svg
@@ -304,24 +314,29 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
               </div>
             </div>
           </div>
-
           {/* Trailer Section */}
           <Separator />
-
-          <div className="flex items-center justify-center w-full py-5">
-            <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
-              <ReactPlayer
-                url={trailer}
-                playing={true}
-                loop={true}
-                muted={true}
-                width="100%"
-                height="100%"
-                controls={true}
-              />
-            </div>
+          {!isTrailerNull && (
+            <>
+              <div className="flex items-center justify-center w-full py-5">
+                <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
+                  <ReactPlayer
+                    url={trailer}
+                    playing={true}
+                    loop={true}
+                    muted={true}
+                    width="100%"
+                    height="100%"
+                    controls={true}
+                  />
+                </div>
+              </div>
+              <Separator />
+            </>
+          )}
+          <div className="h-full">
+            <Reviews movieId={movieId} />
           </div>
-          <Separator />
         </div>
       )}
     </div>
