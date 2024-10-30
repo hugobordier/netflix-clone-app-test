@@ -318,7 +318,12 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           <Separator />
           {!isTrailerNull && (
             <>
-              <div className="flex items-center justify-center w-full py-5">
+              <div className="flex flex-col items-center justify-center w-full py-5">
+                <div className="flex items-start w-full">
+                  <h2 className="h-full mx-4 mb-4 text-3xl font-bold">
+                    Trailer
+                  </h2>
+                </div>
                 <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
                   <ReactPlayer
                     url={trailer}

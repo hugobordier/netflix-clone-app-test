@@ -13,7 +13,7 @@ const MessageCard = ({
 }: messageCardInterface) => {
   return (
     <div className="w-11/12 py-4 border rounded-lg bg-slate-50">
-      <div className="flex items-center px-2 mb-6">
+      <div className="flex items-center px-4 mb-6">
         <img
           src={photoUrl || 'https://randomuser.me/api/portraits/men/97.jpg'}
           alt="Avatar"
@@ -24,23 +24,23 @@ const MessageCard = ({
           <div className="text-gray-500">Ecris le {date.toLocaleString()}</div>
         </div>
       </div>
-      <p className="px-2 mb-6 text-lg leading-relaxed text-gray-800">
+      <p className="px-4 mb-6 text-lg leading-relaxed text-gray-800">
         {message}
       </p>
-      <div className="flex items-center justify-between px-2">
+      <div className="flex items-center justify-between px-4">
         <div>
-          <a href="#" className="mr-4 text-gray-500 hover:text-gray-700">
+          <a className="mr-4 text-gray-500 cursor-pointer hover:text-gray-700">
             <i className="far fa-thumbs-up"></i> Like
           </a>
-          <a href="#" className="text-gray-500 hover:text-gray-700">
+          <a className="text-gray-500 cursor-pointer hover:text-gray-700">
             <i className="far fa-comment-alt"></i> Reply
           </a>
         </div>
         <div className="flex items-center">
-          <a href="#" className="mr-4 text-gray-500 hover:text-gray-700">
+          <a className="mr-4 text-gray-500 cursor-pointer hover:text-gray-700">
             <i className="far fa-flag"></i> Report
           </a>
-          <a href="#" className="text-gray-500 hover:text-gray-700">
+          <a className="text-gray-500 cursor-pointer hover:text-gray-700">
             <i className="far fa-share-square"></i> Share
           </a>
         </div>

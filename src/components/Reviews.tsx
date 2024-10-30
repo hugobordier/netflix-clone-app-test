@@ -112,7 +112,10 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
       <div className="flex flex-col items-center justify-center gap-4 my-2">
         {displayedMessages.length > 0 ? (
           displayedMessages.map((message) => (
-            <div className="w-full max-w-[1200px]" key={message.id}>
+            <div
+              className="w-full flex items-center justify-center max-w-[1200px]"
+              key={message.id}
+            >
               <MessageCard
                 username={
                   message.user?.username ||
@@ -127,11 +130,10 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
         ) : (
           <div>Aucun message trouvé.</div>
         )}
-        {/* Bouton "Charger plus de messages" */}
         {messages && messagesToShow < messages.length && (
           <button
             onClick={handleLoadMore}
-            className="p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-700"
+            className="w-1/6 p-2 my-4 text-white rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800"
           >
             Charger plus de messages
           </button>
