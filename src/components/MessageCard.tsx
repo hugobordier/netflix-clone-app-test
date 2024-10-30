@@ -21,7 +21,20 @@ const MessageCard = ({
         />
         <div>
           <div className="text-lg font-medium text-gray-800">{username}</div>
-          <div className="text-gray-500">Ecris le {date.toLocaleString()}</div>
+          <div className="text-gray-500">
+            Ecris le{' '}
+            {date.toLocaleDateString('fr-FR', {
+              day: '2-digit',
+              month: '2-digit',
+              year: '2-digit',
+            })}{' '}
+            {date.toLocaleTimeString('fr-FR', {
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false,
+            })}
+          </div>
         </div>
       </div>
       <p className="px-4 mb-6 text-lg leading-relaxed text-gray-800">
