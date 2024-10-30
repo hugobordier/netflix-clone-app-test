@@ -1,7 +1,7 @@
 const Separator = () => {
   return (
-    <div className="w-full h-2 py-3">
-      <div className="w-11/12 bg-white rounded-full"> nimp</div>
+    <div className="flex items-center justify-center w-full h-1 my-3 bg-transparent">
+      <div className="w-[98%] h-[55%] bg-white rounded-full"> </div>
     </div>
   );
 };

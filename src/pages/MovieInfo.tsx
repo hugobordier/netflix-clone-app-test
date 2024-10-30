@@ -240,14 +240,14 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     Laissez un message, svp
                   </p>
                   <form
-                    className="flex flex-col w-5/6 gap-3 h-3/4 max-w-7xl"
+                    className="flex flex-col w-5/6 h-full gap-3 max-w-7xl"
                     onSubmit={(e) => {
                       setIsToastVisible(true);
                       handleSubmit(messageForm, e);
                     }}
                   >
                     <textarea
-                      className="w-full h-full p-2 text-sm text-black rounded-lg"
+                      className="h-full p-2 text-sm text-black rounded-lg "
                       value={messageForm}
                       onChange={(e) => setMessageForm(e.target.value)}
                       placeholder="Entrez votre message"
@@ -308,21 +308,20 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           {/* Trailer Section */}
           <Separator />
 
-          <div className="w-full h-[4652px]">
-            <div className="flex items-center justify-center w-full py-5">
-              <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
-                <ReactPlayer
-                  url={trailer}
-                  playing={true}
-                  loop={true}
-                  muted={true}
-                  width="100%"
-                  height="100%"
-                  controls={true}
-                />
-              </div>
+          <div className="flex items-center justify-center w-full py-5">
+            <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
+              <ReactPlayer
+                url={trailer}
+                playing={true}
+                loop={true}
+                muted={true}
+                width="100%"
+                height="100%"
+                controls={true}
+              />
             </div>
           </div>
+          <Separator />
         </div>
       )}
     </div>
