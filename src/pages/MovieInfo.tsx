@@ -178,9 +178,37 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     </span>
                   ))}
                 </p>
-                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
+                <p className="relative flex text-sm md:text-base lg:text-base 2xl:text-xl">
                   <span className="font-bold">Popularité : </span>
-                  {movieData.popularity}
+                  {movieData.popularity}%
+                  <span className="relative flex h-5 pl-2">
+                    {Array(Math.floor(movieData.popularity / 5))
+                      .fill(0)
+                      .map((_, index) => (
+                        <svg
+                          key={index}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="absolute lucide lucide-person-standing"
+                          style={{
+                            left: `${index * 8}px`,
+                            top: `${index % 2 === 0 ? '0px' : '3px'}`,
+                          }}
+                        >
+                          <circle cx="12" cy="5" r="1" />
+                          <path d="m9 20 3-6 3 6" />
+                          <path d="m6 8 6 2 6-2" />
+                          <path d="M12 10v4" />
+                        </svg>
+                      ))}
+                  </span>
                 </p>
                 <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
                   <span className="font-bold">Durée : </span>
@@ -190,8 +218,16 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                   <span className="font-bold">Date de sortie : </span>
                   {movieData.release_date}
                 </p>
-                <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
-                  <span className="font-bold">Votes : </span>
+                <p
+                  className={`text-sm md:text-base lg:text-base 2xl:text-xl ${
+                    movieData.vote_average >= 8
+                      ? 'text-green-500' // High rating
+                      : movieData.vote_average >= 5
+                        ? 'text-yellow-500' // Average rating
+                        : 'text-red-500' // Low rating
+                  }`}
+                >
+                  <span className="font-bold text-white">Votes : </span>
                   {movieData.vote_average}/10
                 </p>
                 <p className="text-sm md:text-base lg:text-base 2xl:text-xl ">
@@ -223,7 +259,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     >
                       Envoyer
                     </button>
-                    <div className=" flex justify-end">
+                    <div className="flex justify-end ">
                       <div className="p-2 cursor-pointer">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -242,7 +278,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                           <path d="M8.76 3.1c1.15.22 2.13.78 3.24 1.9 1.5-1.5 2.74-2 4.5-2A5.5 5.5 0 0 1 22 8.5c0 2.12-1.3 3.78-2.67 5.17" />
                         </svg>
                       </div>
-                      <div className="cursor-pointer p-2">
+                      <div className="p-2 cursor-pointer">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -271,8 +307,8 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
           {/* Trailer Section */}
 
           <div className="bg-slate-900 w-full h-[4652px]">
-            <div className="w-full flex py-5 justify-center items-center">
-              <div className="overflow-hidden w-11/12 max-w-7xl aspect-video rounded-2xl">
+            <div className="flex items-center justify-center w-full py-5">
+              <div className="w-11/12 overflow-hidden max-w-7xl aspect-video rounded-2xl">
                 <ReactPlayer
                   url={trailer}
                   playing={true}
@@ -280,6 +316,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                   muted={true}
                   width="100%"
                   height="100%"
+                  controls={true}
                 />
               </div>
             </div>
