@@ -111,22 +111,24 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
       </h2>
       <div className="flex flex-col items-center justify-center gap-4 my-2">
         {displayedMessages.length > 0 ? (
-          displayedMessages.map((message) => (
-            <div
-              className="w-full flex items-center justify-center max-w-[1200px]"
-              key={message.id}
-            >
-              <MessageCard
-                username={
-                  message.user?.username ||
-                  message.usernameTmdb ||
-                  'Utilisateur inconnu'
-                }
-                date={message.timestamp}
-                message={message.message}
-              />
-            </div>
-          ))
+          displayedMessages
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .map((message) => (
+              <div
+                className="w-full flex items-center justify-center max-w-[1200px]"
+                key={message.id}
+              >
+                <MessageCard
+                  username={
+                    message.user?.username ||
+                    message.usernameTmdb ||
+                    'Utilisateur inconnu'
+                  }
+                  date={message.timestamp}
+                  message={message.message}
+                />
+              </div>
+            ))
         ) : (
           <div>Aucun message trouvé.</div>
         )}
@@ -138,6 +140,7 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
             Charger plus de messages
           </button>
         )}
+        <div className="h-2"></div>
       </div>
     </div>
   );

@@ -339,7 +339,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
               <Separator />
             </>
           )}
-          <div className="h-full">
+          <div className="w-11/12 h-full">
             <Reviews movieId={movieId} />
           </div>
         </div>
