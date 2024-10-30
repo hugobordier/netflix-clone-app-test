@@ -82,7 +82,7 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
   }
 
   return (
-    <div
+    <button
       className="w-[140px] md:w-[180px] py-4 px-2 bg-transparent flex flex-col items-center transition duration-300 transform md:hover:scale-105"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
@@ -127,7 +127,7 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
       <p className="hidden mt-2 text-xs text-center md:block text-slate-200">
         Durée: {movieData.runtime} minutes
       </p>
-    </div>
+    </button>
   );
 };
 
