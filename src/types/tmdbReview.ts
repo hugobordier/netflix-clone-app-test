@@ -11,7 +11,7 @@ interface tmdbReview {
 interface Authordetails {
   name: string;
   username: string;
-  avatar_path: null;
+  avatar_path: string | null;
   rating: null;
 }
 

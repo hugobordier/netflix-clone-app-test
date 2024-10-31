@@ -7,4 +7,5 @@ export type Message = {
   timestamp: Date;
   user?: User | null;
   usernameTmdb?: string;
+  photoTmdb?: string;
 };

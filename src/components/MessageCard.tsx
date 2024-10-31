@@ -77,11 +77,16 @@ const MessageCard = ({
   message,
   photoUrl,
 }: messageCardInterface) => {
+  const validPhotoUrl =
+    photoUrl && !photoUrl.endsWith('null') ? photoUrl : null;
   return (
     <div className="w-11/12 py-4 border rounded-lg bg-slate-50">
       <div className="flex items-center px-4 mb-6">
         <img
-          src={photoUrl || 'https://randomuser.me/api/portraits/men/97.jpg'}
+          src={
+            validPhotoUrl ||
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+          }
           alt="Avatar"
           className="w-12 h-12 mr-4 rounded-full"
         />

@@ -78,6 +78,7 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
             message: res.content,
             timestamp: new Date(res.created_at),
             usernameTmdb: res.author,
+            photoTmdb: `https://image.tmdb.org/t/p/w500${res.author_details.avatar_path}`,
           }) as Message
       );
 
@@ -177,6 +178,7 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
       <div className="flex flex-col items-center justify-center gap-4 my-2">
         {displayedMessages.length > 0 ? (
           displayedMessages
+            //@ts-ignore
             .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
             .map((message) => (
               <div
@@ -191,6 +193,7 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
                   }
                   date={message.timestamp}
                   message={message.message}
+                  photoUrl={message.photoTmdb || message.user?.photoUrl}
                 />
               </div>
             ))
