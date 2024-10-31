@@ -104,6 +104,71 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
     setMessagesToShow((prev) => prev + 5);
   };
 
+  if (!messages) {
+    return (
+      <div className="flex items-center justify-center w-full">
+        <div className="w-1/12">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <circle
+              fill="#FF156D"
+              stroke="#FF156D"
+              stroke-width="15"
+              r="15"
+              cx="40"
+              cy="65"
+            >
+              <animate
+                attributeName="cy"
+                calcMode="spline"
+                dur="2"
+                values="65;135;65;"
+                keySplines=".5 0 .5 1;.5 0 .5 1"
+                repeatCount="indefinite"
+                begin="-.4"
+              ></animate>
+            </circle>
+            <circle
+              fill="#FF156D"
+              stroke="#FF156D"
+              stroke-width="15"
+              r="15"
+              cx="100"
+              cy="65"
+            >
+              <animate
+                attributeName="cy"
+                calcMode="spline"
+                dur="2"
+                values="65;135;65;"
+                keySplines=".5 0 .5 1;.5 0 .5 1"
+                repeatCount="indefinite"
+                begin="-.2"
+              ></animate>
+            </circle>
+            <circle
+              fill="#FF156D"
+              stroke="#FF156D"
+              stroke-width="15"
+              r="15"
+              cx="160"
+              cy="65"
+            >
+              <animate
+                attributeName="cy"
+                calcMode="spline"
+                dur="2"
+                values="65;135;65;"
+                keySplines=".5 0 .5 1;.5 0 .5 1"
+                repeatCount="indefinite"
+                begin="0"
+              ></animate>
+            </circle>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full mx-4">
       <h2 className="h-full mt-4 mb-8 text-3xl font-bold">
@@ -135,7 +200,7 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
         {messages && messagesToShow < messages.length && (
           <button
             onClick={handleLoadMore}
-            className="w-1/6 p-2 my-4 text-white rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800"
+            className="p-4 mx-4 my-4 text-white rounded-full text-nowrap bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800"
           >
             Charger plus de messages
           </button>

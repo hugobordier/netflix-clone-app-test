@@ -19,7 +19,6 @@ tmdbApi.interceptors.request.use((config) => {
 
   const cachedData = cache.get(cacheKey);
   if (cachedData) {
-    console.log('via cache');
     return Promise.reject({ isCached: true, data: cachedData });
   }
 
@@ -30,7 +29,6 @@ tmdbApi.interceptors.response.use(
   (response) => {
     const cacheKey = `${response.config.url}?${new URLSearchParams(response.config.params).toString()}`;
     cache.set(cacheKey, response.data); // Stocke les données dans le cache
-    console.log('via api');
     return response;
   },
   (error) => {
@@ -88,7 +86,6 @@ export const getTrailerById = async (movieId: number) => {
     const randomIndex = Math.floor(
       Math.random() * response.data.results.length
     );
-    console.log(randomIndex);
     return `https://www.youtube.com/watch?v=${response.data.results[randomIndex]?.key}`;
   } catch (error) {
     console.error(error);

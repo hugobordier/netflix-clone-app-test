@@ -53,7 +53,6 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
       const clickDuration = Date.now() - clickStartTime;
 
       if (clickDuration < 100) {
-        console.log('hello');
         handleNavigate();
       }
 

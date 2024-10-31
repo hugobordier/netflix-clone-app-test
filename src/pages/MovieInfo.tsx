@@ -38,13 +38,10 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
 
   const isTrailerNullFunction = (trailer: string) => {
     const test = trailer.split('=', 2);
-    console.log(test, trailer);
     if (test[1] !== 'undefined') {
       setIsTrailerNull(false);
-      console.log('false');
     } else {
       setIsTrailerNull(true);
-      console.log('true');
     }
   };
 
@@ -117,7 +114,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   }, []);
 
   useEffect(() => {
-    console.log('Location changed');
     setSearchInput('');
     fetchMovieData();
   }, [location]);
@@ -280,8 +276,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                           fill="none"
                           stroke="currentColor"
                           stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
                           className="lucide lucide-heart-off"
                         >
                           <line x1="2" y1="2" x2="22" y2="22" />
@@ -298,8 +292,6 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                           fill="none"
                           stroke="currentColor"
                           stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
                           className="lucide lucide-star-off"
                         >
                           <path d="M8.34 8.34 2 9.27l5 4.87L5.82 21 12 17.77 18.18 21l-.59-3.43" />
