@@ -10,6 +10,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'], 
+        Knewave : ['Knewave','sans-serif'],
+        Kablammo : ['Kablammo','sans-serif'],
       },
       keyframes: {
         slide: {

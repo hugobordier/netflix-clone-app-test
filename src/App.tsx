@@ -12,6 +12,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import User from './types/user';
 import Test from './pages/Test';
 import Footer from './components/Footer';
+import Account from './pages/Account';
 
 function App() {
   const [userData, setUserData] = useState<User | null>(null);
@@ -26,7 +27,7 @@ function App() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setUserData(docSnap.data() as User);
+          setUserData({ ...(docSnap.data() as User), id: user.uid });
         } else {
           setError('No user data found!');
         }
@@ -91,6 +92,10 @@ function App() {
         <Route
           path="/movie/:movieId"
           element={<MovieInfo userData={userData} auth={auth} />}
+        />
+        <Route
+          path="account"
+          element={<Account userData={userData} auth={auth} />}
         />
       </Routes>
       <Footer />

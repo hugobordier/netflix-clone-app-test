@@ -24,14 +24,6 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
     }
   };
 
-  const handleMouseEnter = () => {
-    setIsSettingsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsSettingsOpen(false);
-  };
-
   const handleSettingsToggle = () => {
     setIsSettingsOpen((prev) => !prev);
   };
@@ -104,10 +96,16 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
                   !isSmallScreen ? () => setIsSettingsOpen(false) : undefined
                 }
               >
-                <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">
+                <a
+                  className="block px-4 py-2 text-sm text-white hover:bg-gray-400"
+                  onClick={() => navigate('/account')}
+                >
                   Profile
                 </a>
-                <a className="block px-4 py-2 text-sm text-white hover:bg-gray-400">
+                <a
+                  className="block px-4 py-2 text-sm text-white hover:bg-gray-400"
+                  onClick={() => navigate('/account')}
+                >
                   Account
                 </a>
                 <a className="block px-4 py-2 text-sm text-white md:hidden hover:bg-gray-400">
