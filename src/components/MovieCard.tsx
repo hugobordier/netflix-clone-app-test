@@ -6,9 +6,10 @@ import Movie from '../types/movie';
 interface MovieCardProps {
   movieId: number;
   isScreenSmall: boolean;
+  showText: boolean;
 }
 
-const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
+const MovieCard = ({ movieId, isScreenSmall, showText }: MovieCardProps) => {
   const [movieData, setMovieData] = useState<Movie | null>(null);
   const [clickStartTime, setClickStartTime] = useState<number | null>(null);
   const [isCardHover, setIsCardHover] = useState(false);
@@ -118,14 +119,17 @@ const MovieCard = ({ movieId, isScreenSmall }: MovieCardProps) => {
           alt={movieData.title}
         />
       </div>
+      {showText && (
+        <div>
+          <h2 className="hidden mt-4 text-center text-white select-none md:block md:font-bold">
+            {movieData.title}
+          </h2>
 
-      <h2 className="hidden mt-4 text-center text-white select-none md:block md:font-bold">
-        {movieData.title}
-      </h2>
-
-      <p className="hidden mt-2 text-xs text-center md:block text-slate-200">
-        Durée: {movieData.runtime} minutes
-      </p>
+          <p className="hidden mt-2 text-xs text-center md:block text-slate-200">
+            Durée: {movieData.runtime} minutes
+          </p>
+        </div>
+      )}
     </button>
   );
 };

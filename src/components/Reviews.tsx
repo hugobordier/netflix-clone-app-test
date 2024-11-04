@@ -194,6 +194,7 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
                   date={message.timestamp}
                   message={message.message}
                   photoUrl={message.photoTmdb || message.user?.photoUrl}
+                  maxLines={7}
                 />
               </div>
             ))

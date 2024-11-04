@@ -117,7 +117,11 @@ const MovieRow = ({
                   key={index}
                   className="flex items-center justify-center p-1"
                 >
-                  <MovieCard movieId={movie.id} isScreenSmall={isScreenSmall} />
+                  <MovieCard
+                    movieId={movie.id}
+                    isScreenSmall={isScreenSmall}
+                    showText={true}
+                  />
                 </div>
               );
             })}

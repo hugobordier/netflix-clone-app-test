@@ -41,7 +41,11 @@ const Research = ({ searchTerm }: ResearchProps) => {
                     key={index}
                     className="flex items-center justify-center w-full overflow-hidden rounded-lg"
                   >
-                    <MovieCard movieId={movie.id} isScreenSmall={false} />
+                    <MovieCard
+                      movieId={movie.id}
+                      isScreenSmall={false}
+                      showText={true}
+                    />
                   </div>
                 ))}
             </div>

@@ -5,6 +5,7 @@ type messageCardInterface = {
   date: Date;
   message: string;
   photoUrl?: string;
+  maxLines: number;
 };
 
 type ParagraphProps = {
@@ -76,11 +77,12 @@ const MessageCard = ({
   date,
   message,
   photoUrl,
+  maxLines,
 }: messageCardInterface) => {
   const validPhotoUrl =
     photoUrl && !photoUrl.endsWith('null') ? photoUrl : null;
   return (
-    <div className="w-11/12 py-4 border rounded-lg bg-slate-50">
+    <div className="flex flex-col justify-between w-11/12 py-4 border rounded-lg bg-slate-50">
       <div className="flex items-center px-4 mb-6">
         <img
           src={
@@ -108,7 +110,7 @@ const MessageCard = ({
           </div>
         </div>
       </div>
-      <Paragraph maxLines={7}>{message}</Paragraph>
+      <Paragraph maxLines={maxLines}>{message}</Paragraph>
       <div className="flex items-center justify-between px-4">
         <div>
           <a className="mr-4 text-gray-500 cursor-pointer hover:text-gray-700">

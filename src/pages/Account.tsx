@@ -16,6 +16,8 @@ import {
   collectionGroup,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import MessageCarrousel from '../components/MessageCarrousel';
+import Carousel from 'react-multi-carousel';
 
 type AccountProps = {
   userData: User;
@@ -39,7 +41,7 @@ const Account = ({ userData, auth }: AccountProps) => {
     };
   }, [location]);
 
-  const fetchUserMessages = async (userId: string): Promise<Message[]> => {
+  const fetchUserMessages = async (userId: string): Promise<void> => {
     const messages: Message[] = [];
     const movieMessageCollection = collectionGroup(db, 'messages');
 
@@ -54,18 +56,18 @@ const Account = ({ userData, auth }: AccountProps) => {
       const data = doc.data();
       messages.push({
         id: doc.id,
-        userId: data.userId,
+        userId: userData.username,
         message: data.message,
         timestamp: data.timestamp.toDate(),
         movieID: doc.ref.path.split('/')[1],
       });
     });
-    console.log(messages);
-    return messages;
+    setMessage(messages);
   };
 
   useEffect(() => {
     fetchUserMessages(userData.id);
+    console.log(message);
   }, []);
   return (
     <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-slate-950">
@@ -83,9 +85,16 @@ const Account = ({ userData, auth }: AccountProps) => {
             <div className="w-full md:w-2/5">
               <UserCard userData={userData} auth={auth} />
             </div>
-            <div className="w-full p-6 md:p-12 md:w-3/5 font-Knewave">
-              <h1 className="text-7xl"> Hello , {userData.username}</h1>
-              <h2 className="mt-6 text-3xl">Consultez vos commentaires : </h2>
+            <div className="flex flex-col items-center w-full overflow-y-scroll no-scrollbar md:w-3/5 font-Knewave ">
+              <h1 className="p-6 text-7xl"> Hello , {userData.username}</h1>
+              <h2 className="px-6 py-3 text-3xl">
+                Consultez vos commentaires :{' '}
+              </h2>
+              <div className="flex justify-center w-11/12">
+                <MessageCarrousel messages={message} />
+              </div>
+              <div className="w-full max-w-[82%] mt-4  h-[1px] bg-slate-300 "></div>
+              <h2 className="px-6 py-3 text-xl"> Ma Liste</h2>
             </div>
           </div>
         </div>
