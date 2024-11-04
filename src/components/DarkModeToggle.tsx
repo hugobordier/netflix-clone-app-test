@@ -16,17 +16,17 @@ const ToggleDarkMode = () => {
   };
 
   return (
-    <label className="inline-flex items-center mr-2 cursor-pointer">
+    <label className="items-center mr-2 cursor-pointer">
       <input
         type="checkbox"
         checked={isDarkMode}
         onChange={handleToggle}
         className="sr-only peer"
         style={{
-          width: 200,
+          width: 100,
         }}
       />
-      <div className="relative w-20 h-10 md:w-24 md:h-12 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-10 after:w-10 md:after:h-12 md:after:w-12 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+      <div className="relative w-20 h-10 md:w-20 md:h-10 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-10 after:w-10 md:after:h-10 md:after:w-10 after:transi tion-all dark:border-gray-600 peer-checked:bg-blue-600">
         {/* SVG Icons */}
         <div
           className={`absolute inset-0 flex items-start justify-start transition-opacity duration-300 ${isDarkMode ? 'opacity-100' : 'opacity-0'}`}

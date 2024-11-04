@@ -35,9 +35,7 @@ const Account = ({ userData, auth }: AccountProps) => {
     const messages: Message[] = [];
 
     const moviesCollection = collection(db, 'MessageMovie');
-    console.log(moviesCollection, 'la');
     const moviesSnapshot = await getDocs(moviesCollection);
-    console.log(moviesSnapshot.query, 'giugilugliu');
     for (const movieDoc of moviesSnapshot.docs) {
       const messagesCollection = collection(movieDoc.ref, 'messages');
       const messagesSnapshot = await getDocs(messagesCollection);
