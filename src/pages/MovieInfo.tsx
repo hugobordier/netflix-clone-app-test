@@ -15,7 +15,11 @@ import Toast from '../components/Toast';
 import Separator from '../components/Separator';
 import Reviews from '../components/Reviews';
 import {
+  addMovieToLikedMovieList,
   addMovieToMovieList,
+  getMovieLikedListByUserId,
+  getMovieListByUserId,
+  removeMovieFromLikedMovieList,
   removeMovieFromMovieList,
 } from '../service/firebaseService';
 
@@ -36,10 +40,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isTrailerNull, setIsTrailerNull] = useState(false);
   const [isInList, setIsInList] = useState(false);
-
-  const initializeList = (userList: string[], movieId: string) => {
-    setIsInList(userList.includes(movieId));
-  };
+  const [isInLikedList, setIsInLikedList] = useState(false);
 
   const toggleList = async (userId: string, movieId: string) => {
     if (isInList) {
@@ -48,6 +49,16 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
     } else {
       setIsInList((prev) => !prev);
       await addMovieToMovieList(userId, parseInt(movieId!));
+    }
+  };
+
+  const toggleLikedList = async (userId: string, movieId: string) => {
+    if (isInLikedList) {
+      setIsInLikedList((prev) => !prev);
+      await removeMovieFromLikedMovieList(userId, parseInt(movieId!));
+    } else {
+      setIsInLikedList((prev) => !prev);
+      await addMovieToLikedMovieList(userId, parseInt(movieId!));
     }
   };
 
@@ -120,8 +131,16 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
       const trailerUrl = await getTrailerById(parseInt(movieId!));
       setTrailer(trailerUrl);
       isTrailerNullFunction(trailerUrl);
-      if (userData.List && movieId) {
-        initializeList(userData.List, movieId);
+      const fetchList = await getMovieListByUserId(userData.id);
+      const fetchLikedList = await getMovieLikedListByUserId(userData.id);
+
+      if (fetchList && movieId) {
+        setIsInList(fetchList.includes(movieId));
+        console.log(fetchList.includes(movieId), 'dans la liste');
+      }
+      if (fetchLikedList && movieId) {
+        setIsInLikedList(fetchLikedList.includes(movieId));
+        console.log(fetchLikedList.includes(movieId), 'dans la liste like');
       }
     } catch (error) {
       console.error(
@@ -289,21 +308,43 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                       Envoyer
                     </button>
                     <div className="flex justify-end ">
-                      <button className="p-2 cursor-pointer">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          className="lucide lucide-heart-off"
-                        >
-                          <line x1="2" y1="2" x2="22" y2="22" />
-                          <path d="M16.5 16.5 12 21l-7-7c-1.5-1.45-3-3.2-3-5.5a5.5 5.5 0 0 1 2.14-4.35" />
-                          <path d="M8.76 3.1c1.15.22 2.13.78 3.24 1.9 1.5-1.5 2.74-2 4.5-2A5.5 5.5 0 0 1 22 8.5c0 2.12-1.3 3.78-2.67 5.17" />
-                        </svg>
+                      <button
+                        className="p-2 cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleLikedList(userData.id, movieId!);
+                          console.log(userData);
+                        }}
+                      >
+                        {isInLikedList ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            className="lucide lucide-heart-off"
+                          >
+                            <line x1="2" y1="2" x2="22" y2="22" />
+                            <path d="M16.5 16.5 12 21l-7-7c-1.5-1.45-3-3.2-3-5.5a5.5 5.5 0 0 1 2.14-4.35" />
+                            <path d="M8.76 3.1c1.15.22 2.13.78 3.24 1.9 1.5-1.5 2.74-2 4.5-2A5.5 5.5 0 0 1 22 8.5c0 2.12-1.3 3.78-2.67 5.17" />
+                          </svg>
+                        )}
                       </button>
                       <button
                         className="p-2 cursor-pointer"

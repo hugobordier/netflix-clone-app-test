@@ -89,6 +89,7 @@ function App() {
           path="/home"
           element={<Home userData={userData} auth={auth} />}
         />
+        <Route path="/" element={<Home userData={userData} auth={auth} />} />
         <Route
           path="/movie/:movieId"
           element={<MovieInfo userData={userData} auth={auth} />}

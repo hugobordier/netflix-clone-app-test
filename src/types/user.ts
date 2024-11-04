@@ -4,6 +4,7 @@ type User = {
   age: number;
   id: string;
   List?: string[];
+  LikedList?: string[];
   photoUrl?: string;
 };
 
