@@ -1,22 +1,5 @@
-import {
-  arrayRemove,
-  arrayUnion,
-  collection,
-  doc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
+import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-
-export const getListByUserId = async (userId: string) => {
-  const ListRef = collection(db, 'List');
-  const q = query(ListRef, where('userId', '==', userId));
-
-  const ListSnapshot = await getDocs(q);
-  console.log(ListSnapshot);
-};
 
 export const addMovieToMovieList = async (userId: string, MovieId: number) => {
   try {

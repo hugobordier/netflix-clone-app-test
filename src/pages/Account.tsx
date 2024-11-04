@@ -9,7 +9,6 @@ import { Message } from '../types/message';
 import { getDocs, query, where, collectionGroup } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import MessageCarrousel from '../components/MessageCarrousel';
-import { getListByUserId } from '../service/firebaseService';
 
 type AccountProps = {
   userData: User;
@@ -44,7 +43,6 @@ const Account = ({ userData, auth }: AccountProps) => {
     const querySnapshot = await getDocs(userMessagesQuery);
 
     querySnapshot.forEach((doc) => {
-      //console.log(doc.data());
       const data = doc.data();
       messages.push({
         id: doc.id,
@@ -59,7 +57,6 @@ const Account = ({ userData, auth }: AccountProps) => {
 
   useEffect(() => {
     fetchUserMessages(userData.id);
-    getListByUserId(userData.id);
   }, []);
   return (
     <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-slate-950">

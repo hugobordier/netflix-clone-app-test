@@ -3,6 +3,7 @@ type User = {
   username: string;
   age: number;
   id: string;
+  List?: string[];
   photoUrl?: string;
 };
 

@@ -32,7 +32,7 @@ const MessageCarrousel = ({ messages }: MessageCarrouselProp) => {
                 date={messages[currentIndex].timestamp}
                 message={messages[currentIndex].message}
                 username={messages[currentIndex].userId}
-                maxLines={4}
+                maxLines={3}
               />
             </div>
 
