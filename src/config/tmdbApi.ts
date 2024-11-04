@@ -114,7 +114,6 @@ export const getReviews = async (movieId: number) => {
         language: '',
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

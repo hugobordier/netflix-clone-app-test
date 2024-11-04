@@ -14,6 +14,7 @@ import { db } from '../config/firebase';
 import Toast from '../components/Toast';
 import Separator from '../components/Separator';
 import Reviews from '../components/Reviews';
+import { addMovieToMovieList } from '../service/firebaseService';
 
 type MovieInfoProps = {
   userData: User;
@@ -267,7 +268,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                       Envoyer
                     </button>
                     <div className="flex justify-end ">
-                      <div className="p-2 cursor-pointer">
+                      <button className="p-2 cursor-pointer">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -282,8 +283,15 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                           <path d="M16.5 16.5 12 21l-7-7c-1.5-1.45-3-3.2-3-5.5a5.5 5.5 0 0 1 2.14-4.35" />
                           <path d="M8.76 3.1c1.15.22 2.13.78 3.24 1.9 1.5-1.5 2.74-2 4.5-2A5.5 5.5 0 0 1 22 8.5c0 2.12-1.3 3.78-2.67 5.17" />
                         </svg>
-                      </div>
-                      <div className="p-2 cursor-pointer">
+                      </button>
+                      <button
+                        className="p-2 cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          addMovieToMovieList(userData.id, movieData.id);
+                        }}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -298,7 +306,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                           <path d="M18.42 12.76 22 9.27l-6.91-1L12 2l-1.44 2.91" />
                           <line x1="2" x2="22" y1="2" y2="22" />
                         </svg>
-                      </div>
+                      </button>
                     </div>
                   </form>
                   <div className="w-full h-auto bg-green-600 bottom-2 right-2"></div>

@@ -34,7 +34,6 @@ const Home = ({ userData, auth }: HomeProps) => {
   }, []);
 
   useEffect(() => {
-    console.log('Location changed');
     setSearchInput('');
 
     return () => {

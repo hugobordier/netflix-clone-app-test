@@ -6,18 +6,10 @@ import { useLocation } from 'react-router-dom';
 import Research from '../components/Research';
 import UserCard from '../components/UserCard';
 import { Message } from '../types/message';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  doc,
-  getDoc,
-  collectionGroup,
-} from 'firebase/firestore';
+import { getDocs, query, where, collectionGroup } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import MessageCarrousel from '../components/MessageCarrousel';
-import Carousel from 'react-multi-carousel';
+import { getListByUserId } from '../service/firebaseService';
 
 type AccountProps = {
   userData: User;
@@ -67,7 +59,7 @@ const Account = ({ userData, auth }: AccountProps) => {
 
   useEffect(() => {
     fetchUserMessages(userData.id);
-    console.log(message);
+    getListByUserId(userData.id);
   }, []);
   return (
     <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-slate-950">
@@ -95,6 +87,7 @@ const Account = ({ userData, auth }: AccountProps) => {
               </div>
               <div className="w-full max-w-[82%] mt-4  h-[1px] bg-slate-300 "></div>
               <h2 className="px-6 py-3 text-xl"> Ma Liste</h2>
+              {/* <MyListCarrousel MovieList={}/> */}
             </div>
           </div>
         </div>

@@ -7,6 +7,6 @@ type MyListCarrouselProps = {
 };
 
 const MyListCarrousel = ({ MovieList }: MyListCarrouselProps) => {
-  return <div></div>;
+  return <div>test</div>;
 };
 export default MyListCarrousel;
