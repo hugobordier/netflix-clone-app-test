@@ -8,4 +8,5 @@ export type Message = {
   user?: User | null;
   usernameTmdb?: string;
   photoTmdb?: string;
+  movieID?: string;
 };

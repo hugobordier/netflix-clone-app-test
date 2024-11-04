@@ -6,7 +6,15 @@ import { useLocation } from 'react-router-dom';
 import Research from '../components/Research';
 import UserCard from '../components/UserCard';
 import { Message } from '../types/message';
-import { collection, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  getDoc,
+  collectionGroup,
+} from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 type AccountProps = {
@@ -33,38 +41,31 @@ const Account = ({ userData, auth }: AccountProps) => {
 
   const fetchUserMessages = async (userId: string): Promise<Message[]> => {
     const messages: Message[] = [];
+    const movieMessageCollection = collectionGroup(db, 'messages');
 
-    const moviesCollection = collection(db, 'MessageMovie');
-    const moviesSnapshot = await getDocs(moviesCollection);
-    for (const movieDoc of moviesSnapshot.docs) {
-      const messagesCollection = collection(movieDoc.ref, 'messages');
-      const messagesSnapshot = await getDocs(messagesCollection);
+    const userMessagesQuery = query(
+      movieMessageCollection,
+      where('userId', '==', userId)
+    );
+    const querySnapshot = await getDocs(userMessagesQuery);
 
-      for (const messageDoc of messagesSnapshot.docs) {
-        const messageData = messageDoc.data();
-
-        // Vérifier si userId correspond
-        if (messageData.userId === userId) {
-          const message: Message = {
-            id: messageDoc.id, // messageId
-            userId: messageData.userId,
-            message: messageData.message,
-            timestamp: messageData.timestamp.toDate(), // Convertir en Date
-            user: messageData.user || null,
-            usernameTmdb: messageData.usernameTmdb || undefined,
-            photoTmdb: messageData.photoTmdb || undefined,
-          };
-          messages.push(message);
-        }
-      }
-    }
-
+    querySnapshot.forEach((doc) => {
+      //console.log(doc.data());
+      const data = doc.data();
+      messages.push({
+        id: doc.id,
+        userId: data.userId,
+        message: data.message,
+        timestamp: data.timestamp.toDate(),
+        movieID: doc.ref.path.split('/')[1],
+      });
+    });
+    console.log(messages);
     return messages;
   };
 
   useEffect(() => {
-    fetchUserMessages(userData.id).then((mess) => setMessage(mess));
-    console.log(message, 'prout');
+    fetchUserMessages(userData.id);
   }, []);
   return (
     <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-slate-950">
@@ -82,7 +83,7 @@ const Account = ({ userData, auth }: AccountProps) => {
             <div className="w-full md:w-2/5">
               <UserCard userData={userData} auth={auth} />
             </div>
-            <div className="w-full p-12 md:w-3/5 font-Kablammo">
+            <div className="w-full p-6 md:p-12 md:w-3/5 font-Knewave">
               <h1 className="text-7xl"> Hello , {userData.username}</h1>
               <h2 className="mt-6 text-3xl">Consultez vos commentaires : </h2>
             </div>
