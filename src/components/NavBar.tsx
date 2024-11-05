@@ -56,13 +56,19 @@ const NavBar = ({ username, photo, onSearchChange, auth }: NavBarProps) => {
           <p>Bonjour {username}</p>
           <img
             className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-            src={photo || 'https://via.placeholder.com/40'}
+            src={
+              photo ||
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+            }
             alt="User avatar"
           />
         </li>
 
         <li className="flex flex-row items-center justify-end w-full gap-4 animate-slideinRight">
-          <a className="hidden text-white rounded cursor-pointer md:block hover:text-blue-700 md:bg-transparent md:p-0">
+          <a
+            className="hidden text-white rounded cursor-pointer md:block hover:text-blue-700 md:bg-transparent md:p-0"
+            onClick={() => navigate('/account')}
+          >
             Ma Liste
           </a>
 

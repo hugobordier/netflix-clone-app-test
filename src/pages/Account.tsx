@@ -69,7 +69,6 @@ const Account = ({ userData, auth }: AccountProps) => {
     try {
       const movies: Movie[] = [];
       const moviesId = await getMovieListByUserId(userId);
-      console.log(moviesId);
       if (moviesId) {
         await Promise.all(
           moviesId.map(async (movieId) => {
@@ -84,7 +83,6 @@ const Account = ({ userData, auth }: AccountProps) => {
       }
 
       setMovieList(movies);
-      console.log(movies);
     } catch (error) {
       console.error(error);
       return 'error';
@@ -95,7 +93,6 @@ const Account = ({ userData, auth }: AccountProps) => {
     try {
       const movies: Movie[] = [];
       const moviesId = await getMovieLikedListByUserId(userId);
-      console.log(moviesId);
       if (moviesId) {
         await Promise.all(
           moviesId.map(async (movieId) => {
@@ -110,7 +107,6 @@ const Account = ({ userData, auth }: AccountProps) => {
       }
 
       setMovieLikedList(movies);
-      console.log(movies);
     } catch (error) {
       console.error(error);
       return 'error';
@@ -160,7 +156,7 @@ const Account = ({ userData, auth }: AccountProps) => {
                   <MyListCarrousel MovieList={movieList} />
                 </div>
               ) : (
-                <div className="flex items-center justify-center w-full p-6">
+                <div className="flex items-center justify-center w-full p-6 font-normal">
                   {' '}
                   Pas de films dans la liste
                 </div>
@@ -179,7 +175,7 @@ const Account = ({ userData, auth }: AccountProps) => {
                     <MyListCarrousel MovieList={movieLikedList} />
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center w-full p-6">
+                  <div className="flex items-center justify-center w-full p-6 font-normal">
                     Pas de films dans la liste
                   </div>
                 )}

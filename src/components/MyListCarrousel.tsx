@@ -20,6 +20,7 @@ const MyListCarrousel = ({ MovieList }: MyListCarrouselProps) => {
         navigation
         scrollbar={{ draggable: true }}
         className="h-full"
+        loop={true}
       >
         {MovieList.map((movie) => (
           <SwiperSlide key={movie.movieId} className="w-1/6">

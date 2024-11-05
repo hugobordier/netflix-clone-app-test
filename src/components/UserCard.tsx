@@ -2,6 +2,8 @@ import { Auth, signOut } from 'firebase/auth';
 import User from '../types/user';
 import DarkModeToggle from './DarkModeToggle';
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { uploadUserPhoto } from '../service/firebaseService';
 
 type UserCardProps = {
   userData: User;
@@ -10,6 +12,7 @@ type UserCardProps = {
 
 const UserCard = ({ userData, auth }: UserCardProps) => {
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLogout = async () => {
     try {
@@ -19,6 +22,18 @@ const UserCard = ({ userData, auth }: UserCardProps) => {
       console.error('Erreur lors de la déconnexion :', error);
     }
   };
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      uploadUserPhoto(file, userData.id);
+    }
+  };
+
   return (
     <div className="w-full h-full p-5">
       <div className="flex flex-col items-center w-full h-full p-3 bg-gray-700 rounded-xl">
@@ -30,9 +45,12 @@ const UserCard = ({ userData, auth }: UserCardProps) => {
                 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
               }
               alt="Avatar"
-              className="object-cover w-full h-full rounded-full"
+              className="w-full h-full rounded-full max-h-[300px]"
             />
-            <div className="absolute flex items-center justify-center w-1/4 bg-gray-800 rounded-full cursor-pointer bottom-2 right-2 h-1/4">
+            <div
+              className="absolute flex items-center justify-center w-1/4 bg-gray-800 rounded-full cursor-pointer bottom-2 right-2 h-1/4"
+              onClick={handleClick}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -44,6 +62,12 @@ const UserCard = ({ userData, auth }: UserCardProps) => {
                 <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
               </svg>
             </div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleFileChange}
+            />
           </div>
         </div>
         <div className="w-full h-full m-2 mt-4 bg-gray-800 rounded-2xl">

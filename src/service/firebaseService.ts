@@ -5,7 +5,8 @@ import {
   getDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { db, storage } from '../config/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 export const getMovieListByUserId = async (
   userId: string
@@ -89,5 +90,29 @@ export const removeMovieFromLikedMovieList = async (
     console.log('Valeur supprimée avec succès !');
   } catch (error) {
     console.error('Erreur lors de la suppression de la valeur :', error);
+  }
+};
+
+export const uploadUserPhoto = async (
+  file: File,
+  userId: string
+): Promise<void> => {
+  try {
+    const photoRef = ref(storage, `profile-pictures/${userId}`);
+
+    await uploadBytes(photoRef, file);
+
+    const photoURL = await getDownloadURL(photoRef);
+
+    const userDocRef = doc(db, 'users', userId);
+    await updateDoc(userDocRef, {
+      photoUrl: photoURL,
+    });
+
+    console.log(
+      'Photo uploadée et URL sauvegardée dans Firestore avec succès.'
+    );
+  } catch (error) {
+    console.error("Erreur lors de l'upload de la photo :", error);
   }
 };
