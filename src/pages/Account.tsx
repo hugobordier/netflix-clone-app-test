@@ -9,6 +9,14 @@ import { Message } from '../types/message';
 import { getDocs, query, where, collectionGroup } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import MessageCarrousel from '../components/MessageCarrousel';
+import MyListCarrousel from '../components/MyListCarrousel';
+import Movie from '../types/movie';
+import {
+  getMovieLikedListByUserId,
+  getMovieListByUserId,
+} from '../service/firebaseService';
+import { getMovieById } from '../config/tmdbApi';
+import movieFull from '../types/movieFull';
 
 type AccountProps = {
   userData: User;
@@ -19,6 +27,8 @@ const Account = ({ userData, auth }: AccountProps) => {
   const [searchInput, setSearchInput] = useState('');
   const location = useLocation();
   const [message, setMessage] = useState<Message[]>([]);
+  const [movieList, setMovieList] = useState<Movie[]>([]);
+  const [movieLikedList, setMovieLikedList] = useState<Movie[]>([]);
 
   const handleSearchChange = (value: string) => {
     setSearchInput(value);
@@ -55,8 +65,62 @@ const Account = ({ userData, auth }: AccountProps) => {
     setMessage(messages);
   };
 
+  const fetchMovieList = async (userId: string) => {
+    try {
+      const movies: Movie[] = [];
+      const moviesId = await getMovieListByUserId(userId);
+      console.log(moviesId);
+      if (moviesId) {
+        await Promise.all(
+          moviesId.map(async (movieId) => {
+            const m: movieFull = await getMovieById(parseInt(movieId));
+            movies.push({
+              movieId: m.id,
+              title: m.title,
+              posterPath: m.poster_path,
+            });
+          })
+        );
+      }
+
+      setMovieList(movies);
+      console.log(movies);
+    } catch (error) {
+      console.error(error);
+      return 'error';
+    }
+  };
+
+  const fetchMovieLikedList = async (userId: string) => {
+    try {
+      const movies: Movie[] = [];
+      const moviesId = await getMovieLikedListByUserId(userId);
+      console.log(moviesId);
+      if (moviesId) {
+        await Promise.all(
+          moviesId.map(async (movieId) => {
+            const m: movieFull = await getMovieById(parseInt(movieId));
+            movies.push({
+              movieId: m.id,
+              title: m.title,
+              posterPath: m.poster_path,
+            });
+          })
+        );
+      }
+
+      setMovieLikedList(movies);
+      console.log(movies);
+    } catch (error) {
+      console.error(error);
+      return 'error';
+    }
+  };
+
   useEffect(() => {
     fetchUserMessages(userData.id);
+    fetchMovieList(userData.id);
+    fetchMovieLikedList(userData.id);
   }, []);
   return (
     <div className="relative min-h-screen overflow-hidden text-white no-scrollbar bg-slate-950">
@@ -77,14 +141,49 @@ const Account = ({ userData, auth }: AccountProps) => {
             <div className="flex flex-col items-center w-full overflow-y-scroll no-scrollbar md:w-3/5 font-Knewave ">
               <h1 className="p-6 text-7xl"> Hello , {userData.username}</h1>
               <h2 className="px-6 py-3 text-3xl">
-                Consultez vos commentaires :{' '}
+                Consultez vos commentaires {'('}
+                {message.length}
+                {')'}:{' '}
               </h2>
               <div className="flex justify-center w-11/12">
                 <MessageCarrousel messages={message} />
               </div>
               <div className="w-full max-w-[82%] mt-4  h-[1px] bg-slate-300 "></div>
-              <h2 className="px-6 py-3 text-xl"> Ma Liste</h2>
-              {/* <MyListCarrousel MovieList={}/> */}
+              <h2 className="px-6 py-3 text-xl">
+                {' '}
+                Ma Liste {'('}
+                {movieList.length}
+                {')'}
+              </h2>
+              {movieList.length > 0 ? (
+                <div className="w-full pr-4 ">
+                  <MyListCarrousel MovieList={movieList} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center w-full p-6">
+                  {' '}
+                  Pas de films dans la liste
+                </div>
+              )}
+              <div className="w-full max-w-[82%] mt-4  h-[1px] bg-slate-300 "></div>
+
+              <h2 className="px-6 text-xl">
+                {' '}
+                Mes coup de coeur {'('}
+                {movieLikedList.length}
+                {')'}
+              </h2>
+              <div className="w-full pr-4 ">
+                {movieList.length > 0 ? (
+                  <div className="w-full pr-4 ">
+                    <MyListCarrousel MovieList={movieLikedList} />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center w-full p-6">
+                    Pas de films dans la liste
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

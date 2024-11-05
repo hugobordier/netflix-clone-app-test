@@ -12,16 +12,7 @@ interface MovieCardProps {
 const MovieCard = ({ movieId, isScreenSmall, showText }: MovieCardProps) => {
   const [movieData, setMovieData] = useState<Movie | null>(null);
   const [clickStartTime, setClickStartTime] = useState<number | null>(null);
-  const [isCardHover, setIsCardHover] = useState(false);
   const navigate = useNavigate();
-
-  const handleMouseEnter = () => {
-    setIsCardHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsCardHover(false);
-  };
 
   const fetchMovieData = async () => {
     try {
@@ -53,7 +44,7 @@ const MovieCard = ({ movieId, isScreenSmall, showText }: MovieCardProps) => {
     if (clickStartTime) {
       const clickDuration = Date.now() - clickStartTime;
 
-      if (clickDuration < 100) {
+      if (clickDuration < 200) {
         handleNavigate();
       }
 
@@ -86,33 +77,8 @@ const MovieCard = ({ movieId, isScreenSmall, showText }: MovieCardProps) => {
       className="w-[140px] md:w-[180px] py-4 px-2 bg-transparent flex flex-col items-center transition duration-300 transform md:hover:scale-105"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
-      <div className="relative md:h-[240]">
-        {(isCardHover || isScreenSmall) && (
-          <div
-            className="absolute flex items-center justify-center w-8 cursor-pointer right-2 bottom-2 aspect-square"
-            onClick={() => {
-              console.log('a ajoute dans MyList');
-            }}
-            onMouseDown={(e) => e.stopPropagation()}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              className="cursor-pointer"
-            >
-              <path d="M8.34 8.34 2 9.27l5 4.87L5.82 21 12 17.77 18.18 21l-.59-3.43" />
-              <path d="M18.42 12.76 22 9.27l-6.91-1L12 2l-1.44 2.91" />
-              <line x1="2" x2="22" y1="2" y2="22" />
-            </svg>
-          </div>
-        )}
+      <div className="relative ">
         <img
           className="object-cover w-full h-auto rounded-lg pointer-events-none"
           src={`https://image.tmdb.org/t/p/w500${movieData.posterPath}`}

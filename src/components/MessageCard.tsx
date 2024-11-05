@@ -82,7 +82,7 @@ const MessageCard = ({
   const validPhotoUrl =
     photoUrl && !photoUrl.endsWith('null') ? photoUrl : null;
   return (
-    <div className="flex flex-col justify-between w-11/12 py-4 border rounded-lg bg-slate-50">
+    <div className="flex flex-col justify-between w-11/12 h-full py-4 border rounded-lg bg-slate-50">
       <div className="flex items-center px-4 mb-6">
         <img
           src={
