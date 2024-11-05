@@ -1,50 +1,83 @@
-# React + TypeScript + Vite
+# Netflix Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Netflix clone built using React, Firebase for authentication, Firestore for user data management, and Firebase Storage for profile image storage.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Node.js** and **npm** should be installed on your machine.
+- A **Firebase** project configured with:
+  - **Firestore** for the database,
+  - **Authentication** for user sign-in,
+  - **Storage** for image management.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 1. Clone the repository
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+```bash
+git clone https://github.com/your-username/netflix-clone.git
+cd netflix-clone
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+Run the following command to install the required packages:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
+```bash
+npm install
 ```
+
+### 3. Firebase Configuration
+
+Update the Firebase configuration file in `src/config/firebase.js`. Replace the configuration values with your own Firebase project's credentials:
+
+```javascript
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+
+const firebaseConfig = {
+  apiKey: 'your-api-key',
+  authDomain: 'your-auth-domain',
+  projectId: 'your-project-id',
+  storageBucket: 'your-storage-bucket',
+  messagingSenderId: 'your-messaging-sender-id',
+  appId: 'your-app-id',
+  measurementId: 'your-measurement-id',
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth();
+const db = getFirestore(app);
+const storage = getStorage();
+
+export { app, auth, db, storage };
+```
+
+**Important:** Be cautious when pushing your Firebase credentials to public repositories. If testing, make sure these keys have limited permissions or set up a `.env` file to load them securely.
+
+### 4. Start the Application
+
+To run the app in development mode, use:
+
+```bash
+npm run dev
+```
+
+This will start the application on `http://localhost:5173`.
+
+### Features
+
+**User Authentication:** Sign up and log in using Firebase Authentication.
+
+**Profile Image Upload:** Upload and display profile pictures using Firebase Storage.
+
+**Favorites and Liked Lists:** Save and view your favorite movies and liked movies using Firestore.
+
+**Responsive Design:** Optimized layout for desktop and mobile devices.
+
+### Deployment
+
+You can deploy the app using Firebase Hosting or any other hosting service of your choice.

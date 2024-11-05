@@ -286,7 +286,7 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
                     Laissez un message, svp
                   </p>
                   <form
-                    className="flex flex-col w-5/6 h-full gap-3 max-w-7xl"
+                    className="flex flex-col w-1/2 h-full max-w-lg gap-3"
                     onSubmit={(e) => {
                       setIsToastVisible(true);
                       handleSubmit(messageForm, e);
