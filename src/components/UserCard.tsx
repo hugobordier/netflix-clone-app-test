@@ -2,7 +2,7 @@ import { Auth, signOut } from 'firebase/auth';
 import User from '../types/user';
 import DarkModeToggle from './DarkModeToggle';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { uploadUserPhoto } from '../service/firebaseService';
 
 type UserCardProps = {
@@ -13,6 +13,10 @@ type UserCardProps = {
 const UserCard = ({ userData, auth }: UserCardProps) => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [photoRender, setPhotoRender] = useState<string>(
+    userData.photoUrl ||
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+  );
 
   const handleLogout = async () => {
     try {
@@ -27,10 +31,13 @@ const UserCard = ({ userData, auth }: UserCardProps) => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
-      uploadUserPhoto(file, userData.id);
+      const photoUrl = await uploadUserPhoto(file, userData.id);
+      setPhotoRender(photoUrl);
     }
   };
 
@@ -40,12 +47,9 @@ const UserCard = ({ userData, auth }: UserCardProps) => {
         <div className="w-full max-h-[40%] flex p-3 justify-center">
           <div className="relative justify-center w-fit max-w-[600px]">
             <img
-              src={
-                userData.photoUrl ||
-                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-              }
+              src={photoRender}
               alt="Avatar"
-              className="w-full h-full rounded-full max-h-[300px]"
+              className="w-full h-full object-cover aspect-square rounded-full max-h-[300px]"
             />
             <div
               className="absolute flex items-center justify-center w-1/4 bg-gray-800 rounded-full cursor-pointer bottom-2 right-2 h-1/4"
@@ -103,7 +107,7 @@ const UserCard = ({ userData, auth }: UserCardProps) => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                     className="w-12 h-12 mx-3 "
                   >
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />

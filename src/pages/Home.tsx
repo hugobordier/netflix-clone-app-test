@@ -51,6 +51,7 @@ const Home = ({ userData, auth }: HomeProps) => {
         username={userData.username}
         onSearchChange={handleSearchChange}
         auth={auth}
+        photo={userData.photoUrl}
       />
       {searchInput.length > 0 ? (
         <Research searchTerm={searchInput} />

@@ -82,7 +82,11 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
           }) as Message
       );
 
-      const combinedMessages = [...firebaseMessages, ...tmdbMessages];
+      const combinedMessages = [...firebaseMessages, ...tmdbMessages].sort(
+        //@ts-ignore
+        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      );
+
       setMessages(combinedMessages);
 
       setDisplayedMessages(combinedMessages.slice(0, messagesToShow));
@@ -177,27 +181,24 @@ const Reviews = ({ movieId }: ReviewsInterface) => {
       </h2>
       <div className="flex flex-col items-center justify-center gap-4 my-2">
         {displayedMessages.length > 0 ? (
-          displayedMessages
-            //@ts-ignore
-            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-            .map((message) => (
-              <div
-                className="w-full flex items-center justify-center max-w-[1200px]"
-                key={message.id}
-              >
-                <MessageCard
-                  username={
-                    message.user?.username ||
-                    message.usernameTmdb ||
-                    'Utilisateur inconnu'
-                  }
-                  date={message.timestamp}
-                  message={message.message}
-                  photoUrl={message.photoTmdb || message.user?.photoUrl}
-                  maxLines={7}
-                />
-              </div>
-            ))
+          displayedMessages.map((message) => (
+            <div
+              className="w-full flex items-center justify-center max-w-[1200px]"
+              key={message.id}
+            >
+              <MessageCard
+                username={
+                  message.user?.username ||
+                  message.usernameTmdb ||
+                  'Utilisateur inconnu'
+                }
+                date={message.timestamp}
+                message={message.message}
+                photoUrl={message.photoTmdb || message.user?.photoUrl}
+                maxLines={7}
+              />
+            </div>
+          ))
         ) : (
           <div>Aucun message trouvé.</div>
         )}

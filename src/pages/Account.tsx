@@ -124,6 +124,7 @@ const Account = ({ userData, auth }: AccountProps) => {
         username={userData.username}
         onSearchChange={handleSearchChange}
         auth={auth}
+        photo={userData.photoUrl}
       />
 
       {searchInput.length > 0 ? (

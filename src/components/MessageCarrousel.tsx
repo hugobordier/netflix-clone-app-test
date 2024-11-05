@@ -26,7 +26,7 @@ const MessageCarrousel = ({ messages }: MessageCarrouselProp) => {
     <div className="w-full mx-auto rounded-lg shadow-lg ">
       {messages.length > 0 && (
         <div className="relative flex items-center justify-center">
-          <div className="flex w-11/12">
+          <div className="flex justify-around w-11/12">
             <div className="w-2/3">
               <MessageCard
                 date={messages[currentIndex].timestamp}

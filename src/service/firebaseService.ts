@@ -96,7 +96,7 @@ export const removeMovieFromLikedMovieList = async (
 export const uploadUserPhoto = async (
   file: File,
   userId: string
-): Promise<void> => {
+): Promise<string | null> => {
   try {
     const photoRef = ref(storage, `profile-pictures/${userId}`);
 
@@ -112,7 +112,9 @@ export const uploadUserPhoto = async (
     console.log(
       'Photo uploadée et URL sauvegardée dans Firestore avec succès.'
     );
+    return photoURL;
   } catch (error) {
     console.error("Erreur lors de l'upload de la photo :", error);
+    return null;
   }
 };
