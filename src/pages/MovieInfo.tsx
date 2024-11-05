@@ -125,23 +125,21 @@ const MovieInfo = ({ userData, auth }: MovieInfoProps) => {
   };
 
   const fetchMovieData = async () => {
+    const fetchList = await getMovieListByUserId(userData.id);
+    const fetchLikedList = await getMovieLikedListByUserId(userData.id);
+
+    if (fetchList && movieId) {
+      setIsInList(fetchList.includes(movieId));
+    }
+    if (fetchLikedList && movieId) {
+      setIsInLikedList(fetchLikedList.includes(movieId));
+    }
     try {
       const movieTMDB = await getMovieById(parseInt(movieId!));
       setMovieData(movieTMDB);
       const trailerUrl = await getTrailerById(parseInt(movieId!));
       setTrailer(trailerUrl);
       isTrailerNullFunction(trailerUrl);
-      const fetchList = await getMovieListByUserId(userData.id);
-      const fetchLikedList = await getMovieLikedListByUserId(userData.id);
-
-      if (fetchList && movieId) {
-        setIsInList(fetchList.includes(movieId));
-        console.log(fetchList.includes(movieId), 'dans la liste');
-      }
-      if (fetchLikedList && movieId) {
-        setIsInLikedList(fetchLikedList.includes(movieId));
-        console.log(fetchLikedList.includes(movieId), 'dans la liste like');
-      }
     } catch (error) {
       console.error(
         'Erreur lors de la récupération des données du film',
